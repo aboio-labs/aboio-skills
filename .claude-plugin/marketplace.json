@@ -38,9 +38,8 @@
     {
       "name": "gleam-lsp",
       "description": "Code Intelligence support for the Gleam language using the official gleam lsp server",
-      "path": "plugins/gleam-lsp",
-      "type": "code-intelligence",
-      "tags": ["gleam", "lsp", "code-intelligence"]
+      "source": "./plugins/gleam-lsp",
+      "version": "1.0.0"
     }
   ]
 }
