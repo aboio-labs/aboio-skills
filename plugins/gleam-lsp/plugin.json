@@ -1,0 +1,13 @@
+{
+  "name": "gleam-lsp",
+  "version": "1.0.0",
+  "description": "Code Intelligence support for the Gleam language using the official `gleam lsp` server.",
+  "type": "code-intelligence",
+  "lsp": {
+    "command": "gleam",
+    "args": ["lsp"],
+    "extensionToLanguage": {
+      ".gleam": "gleam"
+    }
+  }
+}

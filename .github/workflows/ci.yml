@@ -1,0 +1,56 @@
+name: Skills CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  validate:
+    name: Validate Skills & Plugins
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Validate Registry JSON
+        run: |
+          if ! node -e "JSON.parse(require('fs').readFileSync('registry.json'))"; then
+            echo "Error: registry.json is invalid JSON"
+            exit 1
+          fi
+
+      - name: Validate Skill Structure
+        run: |
+          for skill in skills/*; do
+            if [ -d "$skill" ]; then
+              if [ ! -f "$skill/SKILL.md" ]; then
+                echo "Error: $skill missing SKILL.md"
+                exit 1
+              fi
+              if [ ! -d "$skill/references" ]; then
+                echo "Error: $skill missing references directory"
+                exit 1
+              fi
+            fi
+          done
+
+      - name: Validate Plugin Structure
+        run: |
+          for plugin in plugins/*; do
+            if [ -d "$plugin" ]; then
+              if [ ! -f "$plugin/plugin.json" ]; then
+                echo "Error: $plugin missing plugin.json"
+                exit 1
+              fi
+              # Validate plugin.json is valid JSON
+              if ! node -e "JSON.parse(require('fs').readFileSync('$plugin/plugin.json'))"; then
+                echo "Error: $plugin/plugin.json is invalid JSON"
+                exit 1
+              fi
+            fi
+          done

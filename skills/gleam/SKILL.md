@@ -1,0 +1,129 @@
+---
+name: gleam
+description: Comprehensive Gleam skill covering language fundamentals, backend (OTP,
+  Squirrel, HTTP, auth), frontend (Lustre 5.x, rsvp, modem, plinth), and library design.
+  Use for any Gleam development task.
+---
+
+# Gleam Best Practices
+
+Consolidated skill for Gleam development. Use decision trees below to find the right
+reference, then load detailed docs.
+
+## Core Principles
+
+1. **Errors as Values** — use Result types, never exceptions
+2. **Explicit over Implicit** — no hidden state, no magic
+3. **Type Safety** — let the compiler catch bugs
+4. **Layered Architecture** — separate concerns
+5. **Parse, Don't Validate** — opaque types for validated data
+
+## Quick Decision Trees
+
+### "I need to write Gleam code"
+
+    Writing Gleam?
+    ├─ New to syntax (no if, records, imports)  → fundamentals/language-basics.md
+    ├─ Case expressions, pattern matching       → fundamentals/case-patterns.md
+    ├─ Label shorthand, let assert, pipelines   → fundamentals/language-features.md
+    ├─ Useful stdlib functions                  → fundamentals/stdlib.md
+    ├─ JSON decoding/encoding                   → fundamentals/decoding.md
+    ├─ Opaque types, module design              → fundamentals/type-design.md
+    ├─ Error discipline, AppError patterns      → fundamentals/error-handling.md
+    ├─ use/result.try, helpers                  → fundamentals/code-patterns.md
+    ├─ Tooling (gleam check, format, LSP)       → fundamentals/tooling.md
+    ├─ Input validation (valid)                 → fundamentals/validation-valid.md
+    ├─ Parser combinators (nibble)              → fundamentals/parsing-nibble.md
+    └─ Common mistakes                          → fundamentals/common-pitfalls.md
+
+### "I need to build a backend"
+
+    Backend (Erlang target)?
+    ├─ Web framework (wisp)                     → backend/wisp-framework.md
+    ├─ HTTP server (mist)                       → backend/mist-server.md
+    ├─ OTP actors (basics, state, messages)     → backend/otp.md
+    ├─ OTP supervision (trees, strategies)      → backend/otp-supervision.md
+    ├─ OTP advanced (selectors, timers, ETS)    → backend/otp-advanced.md
+    ├─ Production logging (wisp)                → backend/logging.md
+    ├─ HTTP client runner                       → backend/http-runner.md
+    ├─ Midas algebraic effects                  → backend/midas-effect-task.md
+    ├─ SQL code generation (Squirrel)           → backend/squirrel-guide.md
+    ├─ Database migrations (Cigogne)           → backend/cigogne.md
+    ├─ JWT authentication (ywt)                 → backend/jwt-ywt.md
+    ├─ S3 / object storage (bucket)             → backend/bucket-s3.md
+    └─ Password hashing, timestamps             → backend/auth.md
+
+### "I need to build a frontend"
+
+    Frontend (Lustre / JS target)?
+    ├─ MVU architecture, state, messages        → frontend/lustre-core.md
+    ├─ Effects, paint-cycle, context            → frontend/lustre-effects.md
+    ├─ SPA routing (modem)                      → frontend/lustre-routing.md
+    ├─ HTTP requests (rsvp)                     → frontend/lustre-http.md
+    ├─ Web components, slots, CSS parts         → frontend/lustre-components.md
+    ├─ Events, debounce, throttle               → frontend/lustre-events.md
+    ├─ Composable UI, prop pattern, views       → frontend/lustre-ui-patterns.md
+    ├─ Hydration, server components, FFI        → frontend/lustre-advanced.md
+    ├─ Browser APIs (plinth)                    → frontend/lustre-browser-apis.md
+    └─ Common Lustre gotchas                    → frontend/lustre-gotchas.md
+
+### "I need to design a library"
+
+    Library design?
+    ├─ Effects as data, no IO in core           → library/library-design.md
+    └─ FFI (Erlang + JavaScript)                → library/ffi.md
+
+## Reference Index
+
+### Fundamentals
+| Topic | Reference |
+|-------|-----------|
+| Language basics | `references/fundamentals/language-basics.md` |
+| Language features | `references/fundamentals/language-features.md` |
+| Case patterns | `references/fundamentals/case-patterns.md` |
+| Error handling | `references/fundamentals/error-handling.md` |
+| Type design | `references/fundamentals/type-design.md` |
+| Stdlib & data processing | `references/fundamentals/stdlib.md` |
+| JSON decoding | `references/fundamentals/decoding.md` |
+| Code patterns | `references/fundamentals/code-patterns.md` |
+| Common pitfalls | `references/fundamentals/common-pitfalls.md` |
+| Tooling | `references/fundamentals/tooling.md` |
+| Input validation (valid) | `references/fundamentals/validation-valid.md` |
+| Parser combinators (nibble) | `references/fundamentals/parsing-nibble.md` |
+
+### Backend
+| Topic | Reference |
+|-------|-----------|
+| Web framework (wisp) | `references/backend/wisp-framework.md` |
+| HTTP server (mist) | `references/backend/mist-server.md` |
+| OTP actors & messages | `references/backend/otp.md` |
+| OTP supervision & strategies | `references/backend/otp-supervision.md` |
+| OTP advanced patterns | `references/backend/otp-advanced.md` |
+| Logging (wisp) | `references/backend/logging.md` |
+| HTTP runner | `references/backend/http-runner.md` |
+| Midas effects | `references/backend/midas-effect-task.md` |
+| Squirrel SQL | `references/backend/squirrel-guide.md` |
+| Migrations (Cigogne) | `references/backend/cigogne.md` |
+| JWT auth (ywt) | `references/backend/jwt-ywt.md` |
+| S3 object storage (bucket) | `references/backend/bucket-s3.md` |
+| Auth & time | `references/backend/auth.md` |
+
+### Frontend
+| Topic | Reference |
+|-------|-----------|
+| Lustre core (MVU) | `references/frontend/lustre-core.md` |
+| Effects & context | `references/frontend/lustre-effects.md` |
+| Routing (modem) | `references/frontend/lustre-routing.md` |
+| HTTP (rsvp) | `references/frontend/lustre-http.md` |
+| Web components | `references/frontend/lustre-components.md` |
+| Events | `references/frontend/lustre-events.md` |
+| UI patterns | `references/frontend/lustre-ui-patterns.md` |
+| Advanced (hydration, SSR) | `references/frontend/lustre-advanced.md` |
+| Browser APIs (plinth) | `references/frontend/lustre-browser-apis.md` |
+| Lustre gotchas | `references/frontend/lustre-gotchas.md` |
+
+### Library
+| Topic | Reference |
+|-------|-----------|
+| Library design | `references/library/library-design.md` |
+| FFI | `references/library/ffi.md` |

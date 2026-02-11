@@ -1,0 +1,38 @@
+{
+  "name": "Aboio Agent Skills",
+  "description": "Agent Skills to help developers using AI agents with Gleam and Postgres",
+  "skills": [
+    {
+      "name": "gleam",
+      "description": "Comprehensive Gleam skill covering language fundamentals, backend, frontend, and library design.",
+      "path": "skills/gleam",
+      "tags": ["gleam", "language", "backend", "frontend"]
+    },
+    {
+      "name": "pg-gleam",
+      "description": "Postgres performance optimization and best practices for a Gleam stack.",
+      "path": "skills/pg-gleam",
+      "tags": ["postgres", "gleam", "database", "performance"]
+    },
+    {
+      "name": "code-simplifier",
+      "description": "Expert Gleam code simplification specialist. Refines recently modified code for clarity, consistency, and maintainability.",
+      "path": "skills/code-simplifier",
+      "tags": ["gleam", "refactoring", "simplification"]
+    },
+    {
+      "name": "observability-logging-expert",
+      "description": "Senior observability engineer specializing in Gleam/Erlang/OTP logging. Finds unlogged error branches.",
+      "path": "skills/observability-logging-expert",
+      "tags": ["gleam", "logging", "observability", "wisp"]
+    }
+  ],
+  "plugins": [
+    {
+      "name": "gleam-lsp",
+      "description": "Code Intelligence support for the Gleam language using the official `gleam lsp` server.",
+      "path": "plugins/gleam-lsp",
+      "tags": ["gleam", "lsp", "code-intelligence"]
+    }
+  ]
+}

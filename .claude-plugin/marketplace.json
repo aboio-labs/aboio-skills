@@ -1,0 +1,22 @@
+{
+  "name": "aboio-agent-skills",
+  "owner": {
+    "name": "Aboio",
+    "email": "aboio@aboio.com.br"
+  },
+  "metadata": {
+    "description": "Official Aboio agent skills for Claude Code",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "gleam",
+      "description": "Code intelligence for Gleam",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/supabase-postgres-best-practices"
+      ]
+    }
+  ]
+}
