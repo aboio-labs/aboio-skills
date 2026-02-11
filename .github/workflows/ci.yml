@@ -32,9 +32,11 @@ jobs:
                 echo "Error: $skill missing SKILL.md"
                 exit 1
               fi
+              # References directory is optional for some skills
+              # Skills like code-simplifier, observability-logging-expert, tdd
+              # may have all content in SKILL.md or separate files
               if [ ! -d "$skill/references" ]; then
-                echo "Error: $skill missing references directory"
-                exit 1
+                echo "Note: $skill has no references directory (optional)"
               fi
             fi
           done
