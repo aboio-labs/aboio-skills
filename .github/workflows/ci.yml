@@ -56,3 +56,32 @@ jobs:
               fi
             fi
           done
+
+      - name: Security - Check for Hidden Prompt Injection
+        run: |
+          echo "Scanning for hidden HTML comments in markdown files..."
+
+          # Find all markdown files
+          md_files=$(find . -name "*.md" -not -path "./.git/*")
+
+          # Check for HTML comments
+          if echo "$md_files" | xargs grep -l "<!--" 2>/dev/null; then
+            echo "Found HTML comments in markdown files. Checking for suspicious content..."
+
+            # Extract content between <!-- and --> and check for dangerous commands
+            dangerous_patterns="bash|ssh|curl|wget|nc|netcat|eval|exec|python|node|rm -rf|chmod|chown"
+
+            for file in $md_files; do
+              # Extract HTML comments and check for dangerous patterns
+              if grep -o "<!--.*-->" "$file" 2>/dev/null | grep -iE "$dangerous_patterns" > /dev/null; then
+                echo "❌ SECURITY ALERT: Found potentially harmful commands in HTML comment in: $file"
+                echo "Content:"
+                grep -o "<!--.*-->" "$file" | grep -iE "$dangerous_patterns"
+                exit 1
+              fi
+            done
+
+            echo "✓ HTML comments found but no dangerous commands detected"
+          else
+            echo "✓ No HTML comments found in markdown files"
+          fi
