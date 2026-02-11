@@ -15,8 +15,8 @@ The skills in this repo follow the [Agent Skills](https://agentskills.io/) forma
 ## Installation
 
 ```bash
-# Example installation (if using a skills CLI)
-npx skills add aboio/agent-skills
+# Example installation (if using a Claude Code)
+/plugin marketplace add aboio-labs/aboio-skills
 ```
 
 ## Available Skills
