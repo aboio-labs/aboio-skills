@@ -81,6 +81,18 @@ reference, then load detailed docs.
     ├─ Effects as data, no IO in core           → library/library-design.md
     └─ FFI (Erlang + JavaScript)                → library/ffi.md
 
+### "I need to review OTP code"
+
+    OTP review (after implementing actors/supervision)?
+    └─ Audit actors, supervision, concurrency   → Use /otp-review command
+
+**When to use /otp-review:**
+- After creating new actors
+- After modifying supervision trees
+- After changing actor state or message types
+- When experiencing timeouts, deadlocks, or memory leaks
+- Before committing OTP-related code
+
 ## Reference Index
 
 ### Fundamentals
