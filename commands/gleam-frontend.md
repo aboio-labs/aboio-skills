@@ -50,11 +50,13 @@ All frontend references live under `~/.claude/skills/gleam/references/frontend/`
 
 ### Step 3: Explore existing project structure
 
+**Follow `references/token-efficiency.md` rules.** Explore surgically, not exhaustively.
+
 Before writing any code:
 
-1. Read `gleam.toml` to understand dependencies and project config
-2. Use Glob to find existing `.gleam` files in `src/`
-3. Identify the project's conventions:
+1. Grep `gleam.toml` for specific dependencies you need (e.g., `lustre`, `modem`, `rsvp`)
+2. Use Glob to find existing `.gleam` files matching your feature area (not all of `src/`)
+3. Identify the project's conventions using targeted Grep queries:
    - How the app is structured (single module vs multi-page)
    - Model/Msg type organization
    - Where views are defined

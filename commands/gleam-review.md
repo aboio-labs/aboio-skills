@@ -57,11 +57,16 @@ Then check imports for specific libraries and load their references too:
 
 Only load what the code actually uses — don't load all of them.
 
-### Step 4: Scan the target code
+### Step 4: Scan the target code efficiently
 
-If `$ARGUMENTS` specifies a file or directory, scan that. Otherwise, scan all `.gleam` files in `src/`.
+**Follow `references/token-efficiency.md` rules.** Do NOT read entire files.
 
-Use Glob to find `.gleam` files, then Read each one.
+If `$ARGUMENTS` specifies a file or directory, scan that. Otherwise, scan recently modified `.gleam` files.
+
+1. Run `git diff --name-only` to identify changed files (prefer these over scanning all of `src/`)
+2. Use Grep to find specific patterns across target files (e.g., `let assert`, `Error.*Error`, `case.*True`)
+3. Read only specific line ranges around matches (offset+limit)
+4. Only read full files when you need to understand module structure for safe edits
 
 ### Step 5: Report findings
 

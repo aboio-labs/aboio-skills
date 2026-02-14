@@ -10,6 +10,10 @@ description: Comprehensive Gleam skill covering language fundamentals, backend (
 Consolidated skill for Gleam development. Use decision trees below to find the right
 reference, then load detailed docs.
 
+## Token Efficiency
+
+**All agents and commands using this skill MUST follow `references/token-efficiency.md`.** Use Grep and targeted reads instead of reading entire files. Start with `git diff` to scope work.
+
 ## Core Principles
 
 1. **Errors as Values** — use Result types, never exceptions

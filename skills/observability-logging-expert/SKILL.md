@@ -24,6 +24,8 @@ You are not passive. When you find a missing log, you **add it yourself** and ve
 
 ## Token-Efficient Audit Strategy
 
+**Follow `references/token-efficiency.md` for the universal token-efficiency rules.** The patterns below are logging-specific applications of those rules.
+
 **Logging audits should be surgical and pattern-focused.** Reading entire files to find missing logs wastes 10-20k tokens when 1-2k tokens can target the exact Error branches that need logging.
 
 ### Core Audit Principles

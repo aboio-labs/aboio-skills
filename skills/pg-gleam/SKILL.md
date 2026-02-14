@@ -79,6 +79,14 @@ Reference these guidelines when:
 | 7        | Monitoring & Diagnostics | LOW-MEDIUM  | `monitor-`  |
 | 8        | Advanced Features        | LOW         | `advanced-` |
 
+## Token Efficiency
+
+**Follow `references/token-efficiency.md` rules.** When reviewing or writing database code:
+
+1. Grep for specific SQL patterns (e.g., `pog.transaction`, `set_config`, `FORCE ROW LEVEL`) instead of reading all migration files
+2. Use `git diff --name-only` to scope reviews to changed `.sql` files only
+3. Read targeted line ranges around Grep matches, not entire migrations
+
 ## How to Use
 
 Read individual rule files in `references/` for detailed explanations and SQL examples. Each rule file contains:

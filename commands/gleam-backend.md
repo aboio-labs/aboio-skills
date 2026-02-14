@@ -54,11 +54,13 @@ All backend references live under `~/.claude/skills/gleam/references/backend/`.
 
 ### Step 3: Explore existing project structure
 
+**Follow `references/token-efficiency.md` rules.** Explore surgically, not exhaustively.
+
 Before writing any code:
 
-1. Read `gleam.toml` to understand dependencies and project config
-2. Use Glob to find existing `.gleam` files in `src/`
-3. Identify the project's conventions:
+1. Grep `gleam.toml` for specific dependencies you need (e.g., `wisp`, `pog`, `squirrel`)
+2. Use Glob to find existing `.gleam` files matching your feature area (not all of `src/`)
+3. Identify the project's conventions using targeted Grep queries:
    - Router/handler organization
    - Module naming patterns
    - Where types are defined

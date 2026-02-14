@@ -329,12 +329,15 @@ Flag and fix these when found in recently modified code:
 
 ## Refinement Process
 
+**Follow `references/token-efficiency.md` rules throughout this process.**
+
 1. **Identify recently changed files** — Use `git diff --name-only HEAD~1` or `git status` to find what was recently modified.
-2. **Read each changed file** — Understand the full context before making changes.
-3. **Apply simplifications** — Work through the targets above, one file at a time.
-4. **Run `gleam check`** — Verify compilation after every batch of changes. Fix any errors immediately.
-5. **Run `gleam format`** — Ensure formatting is consistent.
-6. **Summarize changes** — Report what you simplified and why.
+2. **Find simplification opportunities with Grep** — Don't read entire files. Use Grep to find patterns (nested `case`, intermediate `let`, `case.*True`, `option.*Some`) then read targeted line ranges around matches.
+3. **Use git diff -U10 for context** — See changes with surrounding context instead of full file reads.
+4. **Apply simplifications** — Work through the targets above, one file at a time.
+5. **Run `gleam check`** — Verify compilation after every batch of changes. Fix any errors immediately.
+6. **Run `gleam format`** — Ensure formatting is consistent.
+7. **Summarize changes** — Report what you simplified and why.
 
 ## Output Format
 

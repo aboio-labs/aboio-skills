@@ -22,6 +22,8 @@ If you didn't watch the test fail, you don't know if it tests the right thing.
 
 ### Step 0: Load TDD Reference
 
+**Follow `references/token-efficiency.md` rules.** Use targeted reads and Grep throughout.
+
 Read the TDD skill to understand the cycle:
 - Core principles and iron laws
 - Red-Green-Refactor cycle

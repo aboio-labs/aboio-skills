@@ -21,9 +21,14 @@ If `$ARGUMENTS` specifies a file or directory, use that. Otherwise:
 1. Run `git diff --name-only HEAD` to find recently modified `.gleam` files
 2. If no git changes, ask the user which files to audit
 
-### Step 2: Read the target code
+### Step 2: Find unlogged errors efficiently
 
-Use the Read tool to load each target file completely.
+**Follow `references/token-efficiency.md` rules.** Do NOT read entire files. Instead:
+
+1. Use Grep to find `Error(` patterns across target files
+2. Use Grep to find existing `wisp.log_` calls
+3. Cross-reference: Error branches WITHOUT nearby log calls are your targets
+4. Read only specific line ranges (offset+limit) around unlogged Error branches
 
 ### Step 3: Find unlogged error branches
 

@@ -21,9 +21,13 @@ If `$ARGUMENTS` specifies a file or directory, use that. Otherwise:
 1. Run `git diff --name-only HEAD` to find recently modified `.gleam` files
 2. If no git changes, ask the user which files to simplify
 
-### Step 2: Read the target code
+### Step 2: Read the target code efficiently
 
-Use the Read tool to load each target file completely.
+**Follow `references/token-efficiency.md` rules.** Do NOT read entire files. Instead:
+
+1. Run `git diff -U10` on each target file to see changes with context
+2. Use Grep to find simplification patterns (nested `case`, intermediate `let`, etc.)
+3. Read only specific line ranges around matches (offset+limit)
 
 ### Step 3: Analyze for simplification opportunities
 

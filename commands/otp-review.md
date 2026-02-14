@@ -27,14 +27,22 @@ Audit Gleam/OTP code for actor design, supervision strategy, concurrency safety,
 
 ### Step 1: Identify OTP-related changes
 
+**Follow `references/token-efficiency.md` rules.** Never read entire files when Grep can find OTP patterns directly.
+
 Find files with OTP code:
 
 ```bash
 # If reviewing uncommitted work
-git status
+git diff --name-only
 
 # If reviewing recent commit
 git diff --name-only HEAD~1
+```
+
+Use Grep to find OTP patterns — don't read full files:
+
+```bash
+Grep "actor\.|supervisor\.|factory\.|process\.|Subject(|StartResult" --type gleam
 ```
 
 Focus on files containing: `actor.`, `supervisor.`, `factory.`, `process.`, `Subject(`, `StartResult`.

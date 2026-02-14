@@ -13,6 +13,10 @@ Write the test first. Watch it fail. Write minimal code to pass.
 
 **Violating the letter of the rules is violating the spirit of the rules.**
 
+## Token Efficiency
+
+**Follow `references/token-efficiency.md` rules.** When finding test files or understanding code to test, use Grep and targeted reads instead of reading entire source files.
+
 ## When to Use
 
 **Always:**
