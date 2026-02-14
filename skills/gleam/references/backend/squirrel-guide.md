@@ -4,6 +4,8 @@
 
 Squirrel generates type-safe Gleam functions from SQL files. It reads `.sql` files and produces a `sql.gleam` module with typed functions for each query.
 
+For PostgreSQL type mappings, connection config, and SQL patterns (pagination, upsert, etc.), see the **pg-gleam** skill.
+
 ## Critical Rule: One Query Per File
 
 **Squirrel CANNOT handle multiple queries in a single file.**
@@ -131,29 +133,6 @@ pub fn create(db: pog.Connection, tenant_id: Uuid, email: String, name: String)
 }
 ```
 
-## PostgreSQL Types
-
-### Supported Types
-
-| PostgreSQL           | Gleam                         |
-| -------------------- | ----------------------------- |
-| `uuid`               | `Uuid` (from youid)           |
-| `text`, `varchar`    | `String`                      |
-| `integer`, `int4`    | `Int`                         |
-| `bigint`, `int8`     | `Int`                         |
-| `boolean`            | `Bool`                        |
-| `timestamp`          | `Timestamp` (from gleam/time) |
-| `numeric`, `decimal` | `Float`                       |
-| `jsonb`, `json`      | `Json`                        |
-
-### NOT Supported
-
-| PostgreSQL    | Status                          |
-| ------------- | ------------------------------- |
-| `timestamptz` | NOT SUPPORTED - use `timestamp` |
-| `interval`    | NOT SUPPORTED                   |
-| `array` types | LIMITED SUPPORT                 |
-
 ## Handling NULL Columns
 
 For nullable columns, Squirrel generates `Option(T)`:
@@ -176,9 +155,7 @@ pub type GetProductRow {
 
 ## Handling NULL Parameters
 
-Squirrel infers parameter nullability from the PostgreSQL column definition. If a column is `NOT NULL`, Squirrel generates a required parameter. If a column is nullable, Squirrel generates an `Option(T)` parameter.
-
-Pass `Option` values directly — Squirrel handles `None` as SQL `NULL`:
+Squirrel infers parameter nullability from the PostgreSQL column definition. Pass `Option` values directly — Squirrel handles `None` as SQL `NULL`:
 
 ```gleam
 pub fn create(
@@ -197,27 +174,7 @@ pub fn create(
 
 ## Enum Types
 
-Squirrel generates Gleam types for PostgreSQL enums:
-
-```sql
--- In migration
-CREATE TYPE order_status AS ENUM ('pending', 'processing', 'completed', 'cancelled');
-```
-
-Generates:
-
-```gleam
-pub type OrderStatus {
-  Pending
-  Processing
-  Completed
-  Cancelled
-}
-```
-
-### Enum Naming Conflicts
-
-If multiple enums have the same variant names, you'll get a compile error. Rename the SQL enum values:
+Squirrel generates Gleam types for PostgreSQL enums. Prefix enum values to avoid naming conflicts across types:
 
 ```sql
 -- WRONG - both have "pending"
@@ -225,8 +182,15 @@ CREATE TYPE order_status AS ENUM ('pending', 'completed');
 CREATE TYPE payment_status AS ENUM ('pending', 'paid');
 
 -- CORRECT - prefixed
-CREATE TYPE order_status AS ENUM ('order_pending', 'order_completed');
-CREATE TYPE payment_status AS ENUM ('payment_pending', 'payment_paid');
+CREATE TYPE order_status AS ENUM ('os_pending', 'os_completed');
+CREATE TYPE payment_status AS ENUM ('ps_pending', 'ps_paid');
+```
+
+Generates:
+
+```gleam
+pub type OrderStatus { OsPending, OsCompleted }
+pub type PaymentStatus { PsPending, PsPaid }
 ```
 
 ## Naming Conventions
@@ -242,55 +206,6 @@ CREATE TYPE payment_status AS ENUM ('payment_pending', 'payment_paid');
 | `count_*.sql`       | COUNT query                  | `count_users_by_status.sql` |
 | `upsert_*.sql`      | INSERT ON CONFLICT           | `upsert_stock.sql`          |
 
-## Common Patterns
-
-### Pagination
-
-```sql
--- file: list_users_paginated.sql
-SELECT id, email, name, created_at
-FROM users
-WHERE tenant_id = $1 AND deleted_at IS NULL
-ORDER BY created_at DESC
-LIMIT $2 OFFSET $3;
-```
-
-### Search/Filter
-
-```sql
--- file: search_users.sql
-SELECT id, email, name
-FROM users
-WHERE tenant_id = $1
-  AND deleted_at IS NULL
-  AND (name ILIKE '%' || $2 || '%' OR email ILIKE '%' || $2 || '%')
-ORDER BY name
-LIMIT $3;
-```
-
-### Aggregation
-
-```sql
--- file: get_total_stock.sql
-SELECT
-  COALESCE(SUM(quantity), 0) as total_quantity,
-  COALESCE(SUM(reserved_quantity), 0) as total_reserved,
-  COALESCE(SUM(quantity) - SUM(reserved_quantity), 0) as total_available
-FROM stock
-WHERE variant_id = $1 AND tenant_id = $2;
-```
-
-### Upsert
-
-```sql
--- file: upsert_stock.sql
-INSERT INTO stock (tenant_id, warehouse_id, variant_id, quantity)
-VALUES ($1, $2, $3, $4)
-ON CONFLICT (warehouse_id, variant_id)
-DO UPDATE SET quantity = stock.quantity + EXCLUDED.quantity, updated_at = now()
-RETURNING id, quantity, updated_at;
-```
-
 ## Troubleshooting
 
 ### "cannot insert multiple commands"
@@ -299,7 +214,7 @@ You have multiple queries in one file. Split into separate files.
 
 ### "unknown type" error
 
-The PostgreSQL type is not supported. Check the supported types list.
+The PostgreSQL type is not supported. Check pg-gleam skill for the supported types list.
 
 ### timestamptz not working
 
@@ -317,7 +232,13 @@ This error means `uuid.from_bit_array()` rejected the binary data. The "String" 
 
 ### UUID decode works in production but fails in tests
 
-Check if test fixtures use hand-crafted UUIDs. The version nibble (first hex digit of the third group: `xxxxxxxx-xxxx-Vxxx`) must be 1–5 or 7. Replace mock UUIDs with `uuid_generate_v7()` calls or use `::text` casts for queries that must work with legacy mock data.
+Check if test fixtures use hand-crafted UUIDs. The version nibble (first hex digit of the third group: `xxxxxxxx-xxxx-Vxxx`) must be 1–5 or 7. Replace mock UUIDs with `uuid_generate_v7()` calls.
+
+## Critical: Never Modify Generated sql.gleam Files
+
+**The `sql.gleam` files generated by Squirrel should NEVER be manually edited.** Any manual changes will be lost on next `gleam run -m squirrel`.
+
+Workflow: Write SQL → Run Squirrel → Update view layer if needed → Never edit sql.gleam.
 
 ## Best Practice: Model Layer Helper
 
@@ -333,187 +254,15 @@ fn extract_first(rows: List(a)) -> Result(a, error.Error) {
 }
 ```
 
-## Critical: Never Modify Generated sql.gleam Files
-
-**The `sql.gleam` files generated by Squirrel should NEVER be manually edited.**
-
-When you run `gleam run -m squirrel`, it regenerates ALL sql.gleam files from the .sql source files. Any manual changes will be lost.
-
-### The Correct Workflow
-
-1. **Write SQL correctly** in `.sql` files to produce the types you need
-2. **Run Squirrel** to generate `sql.gleam`
-3. **Update view/\*.gleam** files if needed to work with new types
-4. **Never edit sql.gleam** directly
-
-### If Generated Code Has Issues
-
-If the generated sql.gleam has issues (e.g., enum conflicts, type mismatches):
-
-1. **Fix the source SQL** to avoid the issue
-2. **Fix the database schema** if needed (migrations)
-3. **Re-run Squirrel** to regenerate
-
-## Enum Conflicts in Generated Code
-
-### The Problem
-
-When multiple PostgreSQL enums share variant names, Gleam compilation fails:
-
-```sql
--- These enums will cause conflicts:
-CREATE TYPE order_status AS ENUM ('pending', 'cancelled');
-CREATE TYPE payment_status AS ENUM ('pending', 'paid');
-CREATE TYPE fulfillment_status AS ENUM ('pending', 'cancelled');
-```
-
-Squirrel generates:
-
-```gleam
-pub type OrderStatus { Pending, Cancelled }
-pub type PaymentStatus { Pending, Paid }      -- ERROR: Pending already defined!
-pub type FulfillmentStatus { Pending, Cancelled }  -- ERROR: Both conflict!
-```
-
-### The Solution: Prefix Enum Values in PostgreSQL
-
-Design your enums with unique prefixes from the start:
-
-```sql
--- CORRECT: Prefixed enum values
-CREATE TYPE order_status AS ENUM ('os_pending', 'os_cancelled', 'os_delivered');
-CREATE TYPE payment_status AS ENUM ('ps_pending', 'ps_paid', 'ps_refunded');
-CREATE TYPE fulfillment_status AS ENUM ('fs_pending', 'fs_cancelled', 'fs_fulfilled');
-```
-
-Squirrel generates:
-
-```gleam
-pub type OrderStatus { OsPending, OsCancelled, OsDelivered }
-pub type PaymentStatus { PsPending, PsPaid, PsRefunded }
-pub type FulfillmentStatus { FsPending, FsCancelled, FsFulfilled }
-```
-
-### Migration to Fix Existing Conflicts
-
-If you have existing enums with conflicts, create a migration:
-
-```sql
---- migration:up
--- Add new prefixed values
-ALTER TYPE order_status ADD VALUE 'os_pending';
-ALTER TYPE order_status ADD VALUE 'os_cancelled';
--- Update existing data
-UPDATE orders SET status = 'os_pending' WHERE status = 'pending';
-UPDATE orders SET status = 'os_cancelled' WHERE status = 'cancelled';
--- Note: PostgreSQL doesn't support removing enum values easily
-
---- migration:down
--- Revert is complex, consider if needed
-```
-
-## Handling Nullable Enum Columns
-
-When an enum column is nullable, Squirrel generates `Option(EnumType)`. If you need a non-null default for display purposes, use `COALESCE`:
-
-```sql
--- Squirrel generates Option(Condition) — preferred for nullable enums
-SELECT id, condition FROM products WHERE id = $1;
-
--- Use COALESCE only when you need a guaranteed non-null default
-SELECT id, COALESCE(condition, 'new') as condition FROM products WHERE id = $1;
-```
-
-## POG Connection and Protocol Considerations
-
-POG uses PostgreSQL's **binary wire protocol** (extended query protocol). This means types are delivered in their native binary representations, not as text strings:
-
-### Binary Protocol (Always Used)
-
-- **UUIDs** → raw 16-byte `BitArray` (not strings)
-- **Timestamps** → binary integer representation
-- **Integers** → binary integers
-
-### Native UUID Decoding
-
-POG delivers UUID columns as 16-byte binaries. To decode them as `youid` `Uuid` values instead of strings:
-
-```gleam
-/// Decoder for native binary UUIDs from PostgreSQL
-fn uuid_decoder() {
-  use bit_array <- decode.then(decode.bit_array)
-  case uuid.from_bit_array(bit_array) {
-    Ok(uuid) -> decode.success(uuid)
-    Error(_) -> decode.failure(uuid.v7(), "Uuid")
-  }
-}
-```
-
-This works because: `pg_uuid.erl` returns raw bytes → `decode.bit_array` succeeds (Erlang binaries match `is_bitstring`) → `uuid.from_bit_array` validates the 16-byte UUID.
-
-**Important:** `uuid.from_bit_array()` validates the version nibble (bits 48–51) and only accepts versions 1–5 and 7. Hand-crafted mock UUIDs with version 0 will be rejected. Use `uuid_generate_v7()` or real UUID generators in test data.
-
-### SSL/TLS Connections
-
-For cloud PostgreSQL (Supabase, etc.), enable SSL:
-
-```gleam
-pog.default_config(pool_name)
-|> pog.host(host)
-|> pog.database(database)
-|> pog.user(user)
-|> pog.password(Some(password))
-|> pog.ssl(pog.SslUnverified)  // or pog.SslVerified for production
-|> pog.pool_size(10)
-```
-
-## Writing SQL for POG Compatibility
-
-### Timestamps
-
-Always cast to `timestamp` (not `timestamptz`):
-
-```sql
-SELECT
-    created_at::timestamp,
-    updated_at::timestamp
-FROM users;
-```
-
-### Enums
-
-Cast enums to text for string representation:
-
-```sql
-SELECT
-    status::text,
-    COALESCE(condition::text, 'default_value') as condition
-FROM products;
-```
-
-### Arrays
-
-Arrays have limited support. For complex array handling, consider:
-
-```sql
--- Convert to JSON for more reliable decoding
-SELECT array_to_json(tags) as tags FROM products;
-```
-
-## Summary: SQL Authoring Best Practices
+## SQL Authoring Rules
 
 1. **One query per file** - Squirrel cannot handle multiple queries
 2. **Prefix enum values** - Avoid naming conflicts across enums
 3. **Use `timestamp` not `timestamptz`** - Squirrel doesn't support timestamptz
-4. **Cast enums to text** - Use `status::text` in SELECT
-5. **Handle NULL enums** - Use `COALESCE(enum::text, 'default')` only when needed
-6. **Use RETURNING** - Always return data from INSERT/UPDATE
-7. **Never edit sql.gleam** - Fix SQL source, re-run Squirrel
-8. **Update view layer** - Parse strings to enums in view/\*.gleam if needed
-9. **UUID columns decode natively** - No `::text` cast needed. Squirrel + Pog handle UUID columns as native binary
-10. **Test data must use valid UUIDs** - Hand-crafted UUIDs with version 0 fail native decode. Use `uuid_generate_v7()` in SQL or `uuid.v7()` in Gleam
-11. **No self-aliases** - Never write `column as column`. Use bare column names
-12. **No `"column?"` aliases** - Squirrel reads nullability from the schema
-13. **No NULLIF (absolute)** - No sentinel patterns. Pass parameters directly. Use `CASE` for division-by-zero
-14. **No `::text` on UUIDs** - No `id::text`, no `COALESCE(uuid::text, '')`. Squirrel decodes UUIDs natively
-15. **COALESCE only for**: aggregate defaults, partial updates, nullable enum defaults, JSON aggregation defaults
+4. **Use RETURNING** - Always return data from INSERT/UPDATE
+5. **Never edit sql.gleam** - Fix SQL source, re-run Squirrel
+6. **No self-aliases** - Never write `column as column`. Use bare column names
+7. **No `"column?"` aliases** - Squirrel reads nullability from the schema
+8. **No NULLIF** - No sentinel patterns. Pass parameters directly
+9. **No `::text` on UUIDs** - Squirrel decodes UUIDs natively
+10. **COALESCE only for**: aggregate defaults, partial updates, nullable enum defaults

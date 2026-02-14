@@ -56,7 +56,7 @@ reference, then load detailed docs.
     ├─ OTP actors (basics, state, messages)     → backend/otp.md
     ├─ OTP supervision (trees, strategies)      → backend/otp-supervision.md
     ├─ OTP advanced (selectors, timers, ETS)    → backend/otp-advanced.md
-    ├─ Production logging (wisp)                → backend/logging.md
+    ├─ Production logging (wisp)                → Use /observability-master command
     ├─ HTTP client runner                       → backend/http-runner.md
     ├─ Midas algebraic effects                  → backend/midas-effect-task.md
     ├─ SQL code generation (Squirrel)           → backend/squirrel-guide.md
@@ -97,65 +97,4 @@ reference, then load detailed docs.
 - When experiencing timeouts, deadlocks, or memory leaks
 - Before committing OTP-related code
 
-## Reference Index
-
-### Fundamentals
-| Topic | Reference |
-|-------|-----------|
-| Language basics | `references/fundamentals/language-basics.md` |
-| Language features | `references/fundamentals/language-features.md` |
-| Case patterns | `references/fundamentals/case-patterns.md` |
-| Error handling | `references/fundamentals/error-handling.md` |
-| Type design | `references/fundamentals/type-design.md` |
-| Stdlib & data processing | `references/fundamentals/stdlib.md` |
-| Stdlib module names | `references/fundamentals/stdlib-module-names.md` |
-| JSON decoding | `references/fundamentals/decoding.md` |
-| decode.map vs decode.then | `references/fundamentals/decode-map-vs-then.md` |
-| Code patterns | `references/fundamentals/code-patterns.md` |
-| Helper-first refactoring | `references/fundamentals/helper-first-refactoring.md` |
-| Higher-order SQL helpers | `references/fundamentals/higher-order-sql-helpers.md` |
-| String character filtering | `references/fundamentals/string-character-filtering.md` |
-| Common pitfalls | `references/fundamentals/common-pitfalls.md` |
-| Tooling | `references/fundamentals/tooling.md` |
-| Input validation (valid) | `references/fundamentals/validation-valid.md` |
-| Parser combinators (nibble) | `references/fundamentals/parsing-nibble.md` |
-
-### Backend
-| Topic | Reference |
-|-------|-----------|
-| Web framework (wisp) | `references/backend/wisp-framework.md` |
-| HTTP server (mist) | `references/backend/mist-server.md` |
-| HTTP logging middleware | `references/backend/http-logging-middleware.md` |
-| Three-tier error handling | `references/backend/three-tier-error-handling.md` |
-| OTP actors & messages | `references/backend/otp.md` |
-| OTP supervision & strategies | `references/backend/otp-supervision.md` |
-| OTP advanced patterns | `references/backend/otp-advanced.md` |
-| Logging (wisp) | `references/backend/logging.md` |
-| HTTP runner | `references/backend/http-runner.md` |
-| Midas effects | `references/backend/midas-effect-task.md` |
-| Squirrel SQL | `references/backend/squirrel-guide.md` |
-| Migrations (Cigogne) | `references/backend/cigogne.md` |
-| JWT auth (ywt) | `references/backend/jwt-ywt.md` |
-| S3 object storage (bucket) | `references/backend/bucket-s3.md` |
-| Auth & time | `references/backend/auth.md` |
-| Decoder defaults anti-pattern | `references/backend/decoder-defaults-anti-pattern.md` |
-
-### Frontend
-| Topic | Reference |
-|-------|-----------|
-| Lustre core (MVU) | `references/frontend/lustre-core.md` |
-| Effects & context | `references/frontend/lustre-effects.md` |
-| Routing (modem) | `references/frontend/lustre-routing.md` |
-| HTTP (rsvp) | `references/frontend/lustre-http.md` |
-| Web components | `references/frontend/lustre-components.md` |
-| Events | `references/frontend/lustre-events.md` |
-| UI patterns | `references/frontend/lustre-ui-patterns.md` |
-| Advanced (hydration, SSR) | `references/frontend/lustre-advanced.md` |
-| Browser APIs (plinth) | `references/frontend/lustre-browser-apis.md` |
-| Lustre gotchas | `references/frontend/lustre-gotchas.md` |
-
-### Library
-| Topic | Reference |
-|-------|-----------|
-| Library design | `references/library/library-design.md` |
-| FFI | `references/library/ffi.md` |
+Read at most 2 reference files per turn to stay token-efficient.
