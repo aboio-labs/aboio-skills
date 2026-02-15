@@ -63,6 +63,7 @@ reference, then load detailed docs.
     ├─ Database migrations (Cigogne)           → backend/cigogne.md
     ├─ JWT authentication (ywt)                 → backend/jwt-ywt.md
     ├─ S3 / object storage (bucket)             → backend/bucket-s3.md
+    ├─ Image processing (ansel)                → backend/ansel-image.md
     └─ Password hashing, timestamps             → backend/auth.md
 
 ### "I need to build a frontend"
