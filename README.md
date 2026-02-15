@@ -33,6 +33,10 @@ Postgres performance optimization and best practices for a Gleam + Squirrel + PO
 
 Expert Gleam code simplification specialist. Refines recently modified code for clarity, consistency, and maintainability without changing behavior.
 
+### [api-gleam](./skills/api-gleam)
+
+REST/JSON API design patterns for Gleam + Wisp + Mist. Covers route naming, error responses, pagination, serialization, request dispatch, SPA routing, and middleware composition.
+
 ### [observability-logging-expert](./skills/observability-logging-expert)
 
 Senior observability engineer specializing in Gleam/Erlang/OTP logging. Finds unlogged error branches and adds structured logging with context.

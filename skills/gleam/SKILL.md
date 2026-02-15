@@ -64,6 +64,7 @@ reference, then load detailed docs.
     ├─ JWT authentication (ywt)                 → backend/jwt-ywt.md
     ├─ S3 / object storage (bucket)             → backend/bucket-s3.md
     ├─ Image processing (ansel)                → backend/ansel-image.md
+    ├─ PDF generation (paddlefish)             → backend/paddlefish-pdf.md
     └─ Password hashing, timestamps             → backend/auth.md
 
 ### "I need to build a frontend"

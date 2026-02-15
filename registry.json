@@ -55,6 +55,18 @@
         "gleam",
         "quality"
       ]
+    },
+    {
+      "name": "api-gleam",
+      "description": "REST/JSON API design patterns for Gleam+Wisp.",
+      "path": "skills/api-gleam",
+      "tags": [
+        "gleam",
+        "api",
+        "rest",
+        "wisp",
+        "http"
+      ]
     }
   ],
   "plugins": [
