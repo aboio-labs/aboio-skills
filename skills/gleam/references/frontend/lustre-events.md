@@ -32,21 +32,31 @@ html.element("my-selector", [
 
 ## Advanced Events (Lustre 5.x)
 
-`event.advanced` returns a `Handler(msg)` with control over `prevent_default` and `stop_propagation`:
+`event.advanced` decodes into an `event.handler(...)` record to control `prevent_default` and `stop_propagation` alongside message dispatch. The decoder must return `event.handler(dispatch:, prevent_default:, stop_propagation:)`, NOT a two-tuple.
 
 ```gleam
-// Prevent form submission default behavior
-event.advanced("submit", fn(event) {
-  use data <- decode.field("target", form_data_decoder)
-  decode.success(#(UserSubmittedForm(data), event.prevent_default()))
+// DON'T — stale two-tuple API (does not compile in current Lustre)
+event.advanced("keydown", fn(event) {
+  use key <- decode.field("key", decode.string)
+  decode.success(#(UserPressedKey(key), event.prevent_default()))
 })
 
-// Stop event propagation (e.g., click on nested element)
-event.advanced("click", fn(event) {
-  use id <- decode.field("target", decode.at(["id"], decode.string))
-  decode.success(#(ItemClicked(id), event.stop_propagation()))
+// DO — current record API
+event.advanced("keydown", {
+  use key <- decode.field("key", decode.string)
+  decode.success(event.handler(
+    dispatch: UserPressedKey(key),
+    prevent_default: key == "ArrowDown" || key == "ArrowUp",
+    stop_propagation: False,
+  ))
 })
 ```
+
+Key rules:
+- `prevent_default` and `stop_propagation` are `Bool`, so they can be conditional on the decoded event value.
+- Set `stop_propagation: False` unless a competing ancestor handler must be suppressed. Prefer `False` to preserve global shortcut handlers (Cmd+S, Esc) and bubbling accessibility contracts.
+- Use `event.on` for simple cases where neither flag is needed. Use `event.advanced` only when you need `preventDefault` or `stopPropagation`.
+- `event.prevent_default` (the pipe helper) still works for single-attribute chaining: `event.on("mousedown", decoder) |> event.prevent_default`. Use `event.advanced` when the decision is conditional on the decoded value.
 
 ## Debounce and Throttle (Lustre 5.x)
 
