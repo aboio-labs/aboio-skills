@@ -360,30 +360,33 @@ pub fn render_nested_elements_test() {
 
 ### Simulation Tests for UI (Lustre Pattern)
 
-For libraries with UI components, use simulation testing:
+For libraries with UI components, use simulation testing (requires Lustre v5.2.0+):
 
 ```gleam
 // test/integration/counter_test.gleam
+import lustre/dev/query
 import lustre/dev/simulate
 import my_component/counter
 
 pub fn increment_updates_count_test() {
   counter.app()
   |> simulate.start(Nil)
-  |> simulate.click("button.increment")
-  |> simulate.get_model()
+  |> simulate.click(on: query.element(query.test_id("inc-btn")))
+  |> simulate.model()
   |> should.equal(Counter(count: 1))
 }
 
 pub fn decrement_below_zero_test() {
   counter.app()
-  |> simulate.start(Counter(count: 0))
-  |> simulate.click("button.decrement")
-  |> simulate.get_model()
+  |> simulate.start(Nil)
+  |> simulate.click(on: query.element(query.test_id("dec-btn")))
+  |> simulate.model()
   |> fn(model) { model.count >= 0 }
   |> should.be_true()
 }
 ```
+
+See `frontend/lustre-testing.md` for full query/simulate API reference.
 
 ## API Wrapper Specifics
 

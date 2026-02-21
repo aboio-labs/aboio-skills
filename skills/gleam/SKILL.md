@@ -80,6 +80,7 @@ reference, then load detailed docs.
     ├─ Composable UI, prop pattern, views       → frontend/lustre-ui-patterns.md
     ├─ Hydration, server components, FFI        → frontend/lustre-advanced.md
     ├─ Browser APIs (plinth)                    → frontend/lustre-browser-apis.md
+    ├─ Testing (query, simulate, birdie)         → frontend/lustre-testing.md
     └─ Common Lustre gotchas                    → frontend/lustre-gotchas.md
 
 ### "I need to design a library"
