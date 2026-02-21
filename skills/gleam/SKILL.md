@@ -43,6 +43,7 @@ reference, then load detailed docs.
     ├─ Tooling (gleam check, format, LSP)       → fundamentals/tooling.md
     ├─ Input validation (valid)                 → fundamentals/validation-valid.md
     ├─ Parser combinators (nibble)              → fundamentals/parsing-nibble.md
+    ├─ Snapshot testing (birdie)                → fundamentals/birdie-snapshot-testing.md
     └─ Common mistakes                          → fundamentals/common-pitfalls.md
 
 ### "I need to build a backend"
