@@ -37,7 +37,7 @@ Expert Gleam code simplification specialist. Refines recently modified code for 
 
 REST/JSON API design patterns for Gleam + Wisp + Mist. Covers route naming, error responses, pagination, serialization, request dispatch, SPA routing, and middleware composition.
 
-### [observability-logging-expert](./skills/observability-logging-expert)
+### [observability-master](./skills/observability-master)
 
 Senior observability engineer specializing in Gleam/Erlang/OTP logging. Finds unlogged error branches and adds structured logging with context.
 
