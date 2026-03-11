@@ -140,7 +140,23 @@ fn validate_user_access(user: User) -> Result(Page, String) {
 }
 ```
 
-#### 8. Project-specific helpers
+#### 8. Deprecated stdlib functions → current replacements
+```gleam
+// BEFORE (deprecated — both ends inclusive, returns List(Int))
+list.range(from: 1, to: 5)  // -> [1, 2, 3, 4, 5]
+
+// AFTER (int.range: from INCLUSIVE, to EXCLUSIVE, reducer-style)
+// To get a List(Int), add +1 to the upper bound:
+int.range(from: 1, to: 6, with: [], run: list.prepend)
+// -> [5, 4, 3, 2, 1]  (reverse if order matters)
+
+// When folding directly (no intermediate list needed):
+int.range(from: 1, to: 6, with: 0, run: fn(acc, i) { acc + i })
+// -> 15
+```
+**Watch out:** `list.range(1, 5)` includes 5, but `int.range(1, 5, ...)` stops at 4. Adjust the upper bound by +1 when migrating.
+
+#### 9. Project-specific helpers
 Check if the project has helpers in `helper/` or `shared/` that replace manual patterns:
 - `helper/error/response.gleam` → `error_response.handle(err)`
 - `helper/http/params.gleam` → `get_page_params(req)`

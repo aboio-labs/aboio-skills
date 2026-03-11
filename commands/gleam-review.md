@@ -75,7 +75,7 @@ Organize the review into these categories:
 1. **Type Design** — opaque types, parse-don't-validate, phantom types
 2. **Error Handling** — Result usage, error propagation, `let assert` usage
 3. **Code Patterns** — use expressions, pipelines, label usage, dead code, nested boolean cases
-4. **Common Pitfalls** — string building, list prepend vs append, imports, naming
+4. **Common Pitfalls** — string building, list prepend vs append, imports, naming, deprecated stdlib usage (`list.range` → `int.range` — note: `list.range` is both-inclusive, `int.range` is from-inclusive/to-exclusive and reducer-style; upper bound needs +1 adjustment)
 5. **Logging** — correct log levels (error vs warning vs info), `configure_logger` called at startup, no sensitive data in log messages, using structured context not string interpolation
 6. **Validation** — typed errors not plain strings, separate input/output types (parse don't validate), `all` for multiple rules on one field, `then` for dependent validations, `optional` for nullable fields
 7. **HTTP & Middleware** (wisp) — standard middleware stack present (`rescue_crashes`, `log_request`, `handle_head`, `csrf_known_header_protection`), `Signed` cookies for sessions, body size limits set, `escape_html` for user content in HTML
