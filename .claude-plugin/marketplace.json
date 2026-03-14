@@ -20,7 +20,9 @@
         "./skills/pg-gleam",
         "./skills/code-simplifier",
         "./skills/observability-master",
-        "./skills/tdd"
+        "./skills/tdd",
+        "./skills/frontend-testing",
+        "./skills/api-gleam"
       ]
     },
     {
