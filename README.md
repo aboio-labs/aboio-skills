@@ -23,11 +23,11 @@ The skills in this repo follow the [Agent Skills](https://agentskills.io/) forma
 
 ### [gleam](./skills/gleam)
 
-Comprehensive Gleam skill covering language fundamentals, backend (OTP, Squirrel, HTTP, auth), frontend (Lustre 5.x, rsvp, modem, plinth), and library design.
+Comprehensive Gleam skill covering language fundamentals, backend (OTP, Squirrel, Parrot, HTTP, auth), frontend (Lustre 5.x, rsvp, modem, plinth), and library design.
 
 ### [pg-gleam](./skills/pg-gleam)
 
-Postgres performance optimization and best practices for a Gleam + Squirrel + POG + Cigogne stack.
+Postgres performance optimization and best practices for a Gleam + Squirrel/Parrot + POG + Cigogne stack.
 
 ### [code-simplifier](./skills/code-simplifier)
 

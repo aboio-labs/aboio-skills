@@ -41,7 +41,8 @@ Based on the feature type, read the appropriate reference files:
 | Web framework (wisp)  | `references/backend/wisp-framework.md`        |
 | HTTP server (mist)    | `references/backend/mist-server.md`           |
 | HTTP endpoint/handler | `references/backend/http-runner.md`           |
-| Database/SQL          | `references/backend/squirrel-guide.md`        |
+| Database/SQL (Squirrel) | `references/backend/squirrel-guide.md`      |
+| Database/SQL (Parrot)   | `references/backend/parrot-guide.md`        |
 | JWT auth              | `references/backend/jwt-ywt.md`               |
 | Password/time auth    | `references/backend/auth.md`                  |
 | OTP actor/process     | `references/backend/otp.md`                   |
@@ -65,7 +66,7 @@ Before writing any code:
    - Module naming patterns
    - Where types are defined
    - Error type patterns
-   - Database query file locations (if using Squirrel)
+   - Database query file locations (if using Squirrel or Parrot)
 
 ### Step 4: Call relevant skills
 

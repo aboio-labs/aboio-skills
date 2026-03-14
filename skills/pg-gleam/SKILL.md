@@ -1,11 +1,11 @@
 ---
 name: pg-gleam
-description: Postgres performance optimization and best practices for a Gleam + Squirrel + POG + Cigogne stack. Use this skill when writing, reviewing, or optimizing Postgres queries, schema designs, or database configurations.
+description: Postgres performance optimization and best practices for a Gleam + Squirrel/Parrot + POG + Cigogne stack. Use this skill when writing, reviewing, or optimizing Postgres queries, schema designs, or database configurations.
 license: MIT
 metadata:
   version: "2.0.0"
   date: February 2026
-  abstract: Postgres best practices aligned with a Gleam backend stack (Squirrel for SQL codegen, POG for connections, Cigogne for migrations). Covers schema design, query performance, connection management, security, and patterns specific to our conventions (UUIDv7, bigint money, session-variable RLS, prefixed enums, soft deletes, audit fields).
+  abstract: Postgres best practices aligned with a Gleam backend stack (Squirrel/Parrot for SQL codegen, POG for connections, Cigogne for migrations). Covers schema design, query performance, connection management, security, and patterns specific to our conventions (UUIDv7, bigint money, session-variable RLS, prefixed enums, soft deletes, audit fields).
 model: sonnet
 memory: project
 color: green
@@ -20,7 +20,7 @@ Performance optimization and schema design guide for Postgres, aligned with our 
 | Layer       | Tool      | Role                                        |
 | ----------- | --------- | ------------------------------------------- |
 | Language    | Gleam     | Backend application code                    |
-| SQL codegen | Squirrel  | Generates type-safe Gleam from `.sql` files |
+| SQL codegen | Squirrel / Parrot | Generates type-safe Gleam from `.sql` files |
 | DB driver   | POG       | Connection pooling, binary protocol         |
 | Migrations  | Cigogne   | Schema migrations                           |
 | Extensions  | pg_uuidv7 | UUIDv7 primary key generation               |
@@ -63,7 +63,7 @@ Reference these guidelines when:
 - Reviewing database performance issues
 - Configuring POG connection pooling
 - Working with Row-Level Security (RLS)
-- Creating Squirrel `.sql` query files
+- Creating Squirrel or Parrot `.sql` query files
 - Writing Cigogne migrations
 
 ## Rule Categories by Priority
@@ -169,3 +169,4 @@ _36 reference files across 8 categories_
 - <https://wiki.postgresql.org/wiki/Performance_Optimization>
 - <https://hexdocs.pm/pog/>
 - <https://hexdocs.pm/squirrel/>
+- <https://hexdocs.pm/parrot/>

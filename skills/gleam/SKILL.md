@@ -1,8 +1,8 @@
 ---
 name: gleam
 description: Comprehensive Gleam skill covering language fundamentals, backend (OTP,
-  Squirrel, HTTP, auth), frontend (Lustre 5.x, rsvp, modem, plinth), and library design.
-  Use for any Gleam development task.
+  Squirrel, Parrot, HTTP, auth), frontend (Lustre 5.x, rsvp, modem, plinth), and library
+  design. Use for any Gleam development task.
 ---
 
 # Gleam Best Practices
@@ -61,6 +61,7 @@ reference, then load detailed docs.
     ├─ HTTP client runner                       → backend/http-runner.md
     ├─ Midas algebraic effects                  → backend/midas-effect-task.md
     ├─ SQL code generation (Squirrel)           → backend/squirrel-guide.md
+    ├─ SQL code generation (Parrot/sqlc)        → backend/parrot-guide.md
     ├─ Database migrations (Cigogne)           → backend/cigogne.md
     ├─ JWT authentication (ywt)                 → backend/jwt-ywt.md
     ├─ S3 / object storage (bucket)             → backend/bucket-s3.md
