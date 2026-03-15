@@ -44,7 +44,8 @@ reference, then load detailed docs.
     ├─ Input validation (valid)                 → fundamentals/validation-valid.md
     ├─ Parser combinators (nibble)              → fundamentals/parsing-nibble.md
     ├─ Snapshot testing (birdie)                → fundamentals/birdie-snapshot-testing.md
-    └─ Common mistakes                          → fundamentals/common-pitfalls.md
+    ├─ Common mistakes                          → fundamentals/common-pitfalls.md
+    └─ Official conventions & anti-patterns     → fundamentals/conventions.md
 
 ### "I need to build a backend"
 

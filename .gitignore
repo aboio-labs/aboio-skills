@@ -21,6 +21,9 @@ rad.json
 #Test results file
 TestResults.xml
 
+### Plans ###
+docs/plans/
+
 ### macOS ###
 .DS_Store
 .AppleDouble
