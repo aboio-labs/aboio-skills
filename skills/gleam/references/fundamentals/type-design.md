@@ -279,6 +279,26 @@ fn create_user(
 }
 ```
 
+### Bridging Opaque Types to UI State (Frontend)
+
+Opaque types like `Email` represent a *valid* state. However, frontend forms need to represent *invalid* or *half-typed* states while the user is typing. 
+
+**Do NOT use detached error dictionaries** (`field_errors: Dict(String, String)`) alongside raw string fields.
+
+**DO use a FieldState wrapper** that co-locates the raw input, the parsed opaque type, and the domain-specific error.
+
+```gleam
+import shared/validation/email.{type Email, type EmailError}
+
+// Frontend Model
+pub type CustomerForm {
+  CustomerForm(
+    // Holds the raw string, the parsed opaque `Email` (if valid), or the `EmailError`
+    email: FieldState(Email, EmailError), 
+  )
+}
+```
+
 ### Unified Validation Module
 
 For domains with multiple validated types, create a unified validation module:

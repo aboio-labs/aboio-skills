@@ -4,13 +4,12 @@
   "skills": [
     {
       "name": "gleam",
-      "description": "Comprehensive Gleam skill covering language fundamentals, backend, frontend, and library design.",
+      "description": "Core Gleam language skill covering syntax fundamentals, type design, Parse Don't Validate, and JSON decoding.",
       "path": "skills/gleam",
       "tags": [
         "gleam",
         "language",
-        "backend",
-        "frontend"
+        "core"
       ]
     },
     {
@@ -47,7 +46,7 @@
     },
     {
       "name": "tdd",
-      "description": "Test-Driven Development. Write failing test first, then implement. RED → GREEN → REFACTOR cycle.",
+      "description": "Test-Driven Development. Write failing test first, then implement. RED \u2192 GREEN \u2192 REFACTOR cycle.",
       "path": "skills/tdd",
       "tags": [
         "testing",
@@ -70,13 +69,37 @@
     },
     {
       "name": "frontend-testing",
-      "description": "Lustre frontend testing — model, update, and behavior. No styling tests unless explicitly requested.",
+      "description": "Lustre frontend testing \u2014 model, update, and behavior. No styling tests unless explicitly requested.",
       "path": "skills/frontend-testing",
       "tags": [
         "gleam",
         "lustre",
         "testing",
         "frontend"
+      ]
+    },
+    {
+      "name": "gleam-backend",
+      "description": "Gleam backend development skill for the Erlang target. Covers Wisp, Mist, OTP actors, Supervision trees, and SQL codegen integration.",
+      "path": "skills/gleam-backend",
+      "tags": [
+        "gleam",
+        "backend",
+        "erlang",
+        "wisp",
+        "otp"
+      ]
+    },
+    {
+      "name": "lustre",
+      "description": "Gleam frontend development skill targeting JavaScript. Covers Lustre 5.x, MVU Architecture, Advanced Forms, and SPA Routing.",
+      "path": "skills/lustre",
+      "tags": [
+        "gleam",
+        "frontend",
+        "javascript",
+        "lustre",
+        "mvu"
       ]
     }
   ],

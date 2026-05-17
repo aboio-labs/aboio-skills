@@ -26,6 +26,38 @@ pg-gleam/
     └── _contributing.md     # Contributing guide for this skill
 ```
 
+## Reference routing — by task
+
+| Task                          | References to read                                                               |
+|-------------------------------|----------------------------------------------------------------------------------|
+| Designing a new table         | `schema-primary-keys.md` + `schema-data-types.md` + `schema-naming-conventions.md` |
+| Adding Enum columns           | `schema-enums.md`                                                                |
+| Adding Audit / Soft Deletes   | `schema-audit-fields.md` + `schema-soft-deletes.md`                              |
+| Implementing RLS (Tenant Isolation)| `security-rls-basics.md` + `security-session-variables.md`                  |
+| RLS on Child Tables           | `security-rls-child-tables.md` + `security-rls-performance.md`                   |
+| Optimizing slow queries       | `query-missing-indexes.md` + `monitor-explain-analyze.md`                        |
+| Creating indexes              | `schema-foreign-key-indexes.md` + `query-composite-indexes.md`                   |
+| Writing batch inserts         | `data-batch-inserts.md`                                                          |
+| Implementing pagination       | `data-pagination.md`                                                             |
+| Handling concurrent updates   | `lock-short-transactions.md` + `lock-skip-locked.md`                             |
+| Configuring POG connections   | `conn-pooling.md` + `conn-limits.md`                                             |
+
+## Reference routing — by topic
+
+| Topic                                    | Reference                                       |
+|------------------------------------------|-------------------------------------------------|
+| Postgres Data Types to Gleam mapping     | `schema-data-types.md`                          |
+| UUIDv7 generation                        | `schema-primary-keys.md`                        |
+| Row Level Security (RLS) performance     | `security-rls-performance.md`                   |
+| Partial & Covering Indexes               | `query-partial-indexes.md` + `query-covering-indexes.md`|
+| JSONB Indexing                           | `advanced-jsonb-indexing.md`                    |
+| Full Text Search                         | `advanced-full-text-search.md`                  |
+| Deadlock prevention                      | `lock-deadlock-prevention.md`                   |
+| N+1 Query prevention                     | `data-n-plus-one.md`                            |
+| Upserts (`ON CONFLICT`)                  | `data-upsert.md`                                |
+| Connection Pooling & Idle timeouts       | `conn-pooling.md` + `conn-idle-timeout.md`      |
+| Prepared Statements                      | `conn-prepared-statements.md`                   |
+
 ## Reference counts
 | Category    | Prefix       | Files | Priority |
 |-------------|--------------|-------|----------|

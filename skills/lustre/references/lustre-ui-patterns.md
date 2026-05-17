@@ -184,16 +184,23 @@ element.fragment([
 
 ## Controlled Inputs
 
-Controlled inputs sync with your model on every keystroke:
+Controlled inputs sync with your model on every keystroke. 
+
+For robust form validation, use the "Parse, Don't Validate" pattern via a `FieldState(value, error)` wrapper rather than raw strings:
 
 ```gleam
+// Using a field_state paradigm
 html.input([
-  attribute.value(model.email),      // Controlled value
-  event.on_input(UserUpdatedEmail),  // Event handler
+  attribute.value(field_state.raw(model.email)),     // Controlled raw string
+  aria_invalid(field_state.has_error(model.email)),  // ARIA bindings
+  event.on_input(UserUpdatedEmail),                  // Updates raw string
+  event.on_blur(UserBlurredEmail),                   // Triggers validation
 ])
+// Render error below input
+html.div([class("error")], [text(field_state.error_text(model.email))])
 ```
 
-For forms with many fields, consider uncontrolled inputs:
+For forms with many fields where validation is not required per-keystroke, consider uncontrolled inputs:
 
 ```gleam
 html.form([event.on_submit(UserSubmittedForm)], [

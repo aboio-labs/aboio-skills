@@ -89,3 +89,27 @@ type Msg {
   FetchUsers
 }
 ```
+
+## Side-Effect Management ("Dumb" Effects)
+
+Effects (`effect.Effect(Msg)`) are executors of I/O (HTTP calls, DOM manipulation, timers). 
+
+**Effects MUST NOT accept the `Model` as a parameter.**
+
+```gleam
+// BAD: Passing the whole Model encourages the effect to compute business logic
+fn save_user_effect(model: Model) -> Effect(Msg) {
+  // Wrong: Effect is deciding if data is valid
+  case validate(model.form) {
+    Ok(req) -> api.post(model.token, req, ...)
+    Error(_) -> effect.none()
+  }
+}
+
+// GOOD: Effect only accepts exact required primitives
+fn save_user_effect(token: String, req: SaveUserRequest) -> Effect(Msg) {
+  api.post(token, req, ...)
+}
+```
+
+The `update` function is the ONLY brain in the application. It must extract, validate, and compute all necessary DTOs, and then pass only the final primitives into the effect function.

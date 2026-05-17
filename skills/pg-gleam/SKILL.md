@@ -97,72 +97,37 @@ Read individual rule files in `references/` for detailed explanations and SQL ex
 - Optional EXPLAIN output or metrics
 - Gleam/POG-specific notes where applicable
 
-## Available References
+## Reference routing — by task
 
-**Advanced Features** (`advanced-`):
+| Task                          | References to read                                                               |
+|-------------------------------|----------------------------------------------------------------------------------|
+| Designing a new table         | `schema-primary-keys.md` + `schema-data-types.md` + `schema-naming-conventions.md` |
+| Adding Enum columns           | `schema-enums.md`                                                                |
+| Adding Audit / Soft Deletes   | `schema-audit-fields.md` + `schema-soft-deletes.md`                              |
+| Implementing RLS (Tenant Isolation)| `security-rls-basics.md` + `security-session-variables.md`                  |
+| RLS on Child Tables           | `security-rls-child-tables.md` + `security-rls-performance.md`                   |
+| Optimizing slow queries       | `query-missing-indexes.md` + `monitor-explain-analyze.md`                        |
+| Creating indexes              | `schema-foreign-key-indexes.md` + `query-composite-indexes.md`                   |
+| Writing batch inserts         | `data-batch-inserts.md`                                                          |
+| Implementing pagination       | `data-pagination.md`                                                             |
+| Handling concurrent updates   | `lock-short-transactions.md` + `lock-skip-locked.md`                             |
+| Configuring POG connections   | `conn-pooling.md` + `conn-limits.md`                                             |
 
-- `references/advanced-deferred-constraints.md`
-- `references/advanced-full-text-search.md`
-- `references/advanced-generated-columns.md`
-- `references/advanced-jsonb-indexing.md`
+## Reference routing — by topic
 
-**Connection Management** (`conn-`):
-
-- `references/conn-idle-timeout.md`
-- `references/conn-limits.md`
-- `references/conn-pooling.md`
-- `references/conn-prepared-statements.md`
-
-**Data Access Patterns** (`data-`):
-
-- `references/data-batch-inserts.md`
-- `references/data-n-plus-one.md`
-- `references/data-pagination.md`
-- `references/data-upsert.md`
-
-**Concurrency & Locking** (`lock-`):
-
-- `references/lock-advisory.md`
-- `references/lock-deadlock-prevention.md`
-- `references/lock-short-transactions.md`
-- `references/lock-skip-locked.md`
-
-**Monitoring & Diagnostics** (`monitor-`):
-
-- `references/monitor-explain-analyze.md`
-- `references/monitor-pg-stat-statements.md`
-- `references/monitor-vacuum-analyze.md`
-
-**Query Performance** (`query-`):
-
-- `references/query-composite-indexes.md`
-- `references/query-covering-indexes.md`
-- `references/query-index-types.md`
-- `references/query-missing-indexes.md`
-- `references/query-partial-indexes.md`
-
-**Schema Design** (`schema-`):
-
-- `references/schema-audit-fields.md`
-- `references/schema-data-types.md`
-- `references/schema-enums.md`
-- `references/schema-foreign-key-indexes.md`
-- `references/schema-lowercase-identifiers.md`
-- `references/schema-naming-conventions.md`
-- `references/schema-partitioning.md`
-- `references/schema-primary-keys.md`
-- `references/schema-soft-deletes.md`
-
-**Security & RLS** (`security-`):
-
-- `references/security-privileges.md`
-- `references/security-rls-basics.md`
-- `references/security-rls-performance.md`
-
----
-
-_36 reference files across 8 categories_
-
+| Topic                                    | Reference                                       |
+|------------------------------------------|-------------------------------------------------|
+| Postgres Data Types to Gleam mapping     | `schema-data-types.md`                          |
+| UUIDv7 generation                        | `schema-primary-keys.md`                        |
+| Row Level Security (RLS) performance     | `security-rls-performance.md`                   |
+| Partial & Covering Indexes               | `query-partial-indexes.md` + `query-covering-indexes.md`|
+| JSONB Indexing                           | `advanced-jsonb-indexing.md`                    |
+| Full Text Search                         | `advanced-full-text-search.md`                  |
+| Deadlock prevention                      | `lock-deadlock-prevention.md`                   |
+| N+1 Query prevention                     | `data-n-plus-one.md`                            |
+| Upserts (`ON CONFLICT`)                  | `data-upsert.md`                                |
+| Connection Pooling & Idle timeouts       | `conn-pooling.md` + `conn-idle-timeout.md`      |
+| Prepared Statements                      | `conn-prepared-statements.md`                   |
 ## References
 
 - <https://www.postgresql.org/docs/current/>
