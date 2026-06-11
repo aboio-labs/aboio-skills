@@ -72,38 +72,67 @@ fn build_request(form: Form) -> Result(UpdateAddressRequest, Nil) {
 
 ## 3. Form-Level State Machines
 
-A form is a state machine. It is either `Idle` (editable), `Submitting` (locked), or `Failed` (editable, showing server error). 
+A form's **save lifecycle** is a state machine: it is either `SubmitIdle` (editable), `SubmitSaving` (locked, in flight), `SubmitSaved` (done), or `SubmitFailed(ErrorCode)` (editable again, showing the server error). The model **owns its form-data record** and carries a *sibling* `save` field holding that lifecycle. The **variant is the flag** — the saving status is never a `Bool`.
 
-**BAD (Detached Booleans):**
+**BAD (the "boolean twin"):**
 ```gleam
-pub type CustomerForm {
-  CustomerForm(
-    name: String,
-    saving: Bool, // Detached! User can type while Saving.
-  )
+pub type CustomerDialog {
+  CustomerDialog(
+    data: CustomerFormData,
+    saving: Bool,              // detached! user can type while saving
+    error: Option(ErrorCode),  // 8 representable states, most invalid:
+  )                            // saving=True AND error=Some AND already saved?
 }
 ```
 
-**GOOD (Wrapped FormState):**
-Wrap the form data in a `FormState` machine (typically found in `shared/lib/form_state`).
+A `Bool` + `Option` pair encodes impossible combinations and lets edits land mid-flight.
+
+**GOOD (sibling save-lifecycle field):**
+The model owns its data; one sibling `save` field carries the whole lifecycle as a sum type.
 
 ```gleam
-pub type FormState(data) {
-  Idle(data: data)
-  Submitting(data: data)
-  Failed(data: data, error: ErrorCode)
+pub type Submit {
+  SubmitIdle
+  SubmitSaving
+  SubmitSaved
+  SubmitFailed(ErrorCode)  // the typed error channel — see error-handling.md
 }
 
 pub type CustomerDialog {
   CustomerDialog(
-    form_state: FormState(CustomerFormData), // Wraps the data
+    data: CustomerFormData,  // the model owns its form-data record
+    save: Submit,            // the whole save lifecycle in one field
   )
 }
 ```
 
-*Benefit:* 
-1. **Updates:** In `update.gleam`, `form_state.map` ignores mutations if the state is `Submitting`. Impossible to mutate data during flight.
-2. **Views:** In `view.gleam`, you check `form_state.is_submitting(state)`. If `True`, you pass `disabled: True` down to all form inputs automatically.
+*Benefit:*
+1. **Updates:** In `update.gleam`, a `UserTyped…` message that arrives while the save is in flight is simply dropped — no edit lands mid-flight. Guard **behaviorally** with a predicate, never by hard-coding a stored `Bool`.
+2. **Views:** In `view.gleam`, predicates (`submit.is_saving`, `submit.is_failed`) drive `disabled:` on every input and surface the `SubmitFailed(ErrorCode)` payload as the form-level error.
+
+Guard on **behavior**, not structure:
+```gleam
+// view.gleam — disable inputs while the save is in flight
+let locked = submit.is_saving(model.save)
+html.input([attribute.disabled(locked), ..attrs])
+
+// update.gleam — ignore edits during flight
+case submit.is_saving(model.save) {
+  True -> #(model, effect.none())                       // drop the edit
+  False -> #(set_field(model, field, value), effect.none())
+}
+```
+
+**Page loads work the same way.** Model an async page payload as `RemoteData` — the loaded value lives *inside* the `RemoteLoaded` variant — and guard with `remote.is_loading`, never an `is_loading: Bool` beside an `Option(data)`. (See `RemoteData` in `gleam/references/fundamentals/type-design.md`.)
+
+> **aboio reference implementation — the `spine` lib.** In the aboio house stack, `Submit` and `RemoteData` ship in the vendored `spine` lib, each re-bound in the client as an `ErrorCode`-specialized type alias (`state/submit`, `state/remote`). The pattern above is what matters — if your project doesn't vendor `spine`, define the equivalent unions yourself.
+>
+> **Import recipe (aboio stack).** The `state/*` modules expose only the **type aliases** (`type Submit`, `type RemoteData`); the **constructors and predicates** (`SubmitSaving`, `submit.is_saving`, `remote.is_loading`) live in `spine/submit` / `spine/remote`. The two `submit` modules collide on the bare name, so a file that *both* annotates a field and calls predicates needs:
+> ```gleam
+> import spine/submit                   // constructors + predicates: submit.SubmitSaving, submit.is_saving
+> import state/submit as state_submit   // the ErrorCode-bound alias, for annotations only
+> ```
+> A model-type file that only annotates can use `import state/submit.{type Submit}` alone.
 
 ---
 

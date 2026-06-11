@@ -42,9 +42,10 @@ pub fn fetch_success_populates_list_test() {
 pub fn fetch_error_sets_error_state_test() {
   let model =
     test_app()
-    |> simulate.message(FetchedOrders(Error("Network error")))
+    // The Msg carries a typed ErrorCode, never a stringly message
+    |> simulate.message(FetchedOrders(Error(RequestTimedOut)))
     |> simulate.model()
-  model.error |> should.equal(Some("Network error"))
+  model.error |> should.equal(Some(RequestTimedOut))
 }
 ```
 
@@ -58,7 +59,7 @@ pub fn fill_form_and_submit_test() {
     |> simulate.input(on: query.element(query.id("name")), value: "Alice")
     |> simulate.click(on: query.element(query.id("submit")))
     |> simulate.model()
-  model.is_submitting |> should.equal(True)
+  model.save |> should.equal(submit.SubmitSaving)
   model.form.email |> should.equal("a@b.com")
 }
 ```
