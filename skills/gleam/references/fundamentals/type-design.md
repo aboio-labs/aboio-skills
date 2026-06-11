@@ -299,6 +299,35 @@ pub type CustomerForm {
 }
 ```
 
+### Async Page State: RemoteData
+
+A page that loads data over the network has four states, not a `Bool` + `Option`. Model them as one union so the loading flag and the payload can never disagree.
+
+```gleam
+// BAD — detached: is_loading can be True while data is Some, or both empty
+pub type ProductsPage {
+  ProductsPage(
+    is_loading: Bool,
+    data: Option(List(Product)),
+    error: Option(String),
+  )
+}
+
+// GOOD — the payload lives *inside* the loaded variant
+pub type RemoteData(value, error) {
+  RemoteIdle
+  RemoteLoading
+  RemoteLoaded(value)
+  RemoteFailed(error)
+}
+
+pub type Model {
+  Model(products: RemoteData(List(Product), ErrorCode))
+}
+```
+
+Guard behaviorally with predicates (`remote.is_loading`, `remote.is_failed`) rather than reaching into the variant in the view. The failure carries a typed `ErrorCode` (see `error-handling.md`), never a stringly message. A form's *save* lifecycle uses the same shape — see `Submit` in the lustre skill's `advanced-mvu-forms.md`.
+
 ### Unified Validation Module
 
 For domains with multiple validated types, create a unified validation module:

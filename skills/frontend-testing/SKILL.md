@@ -49,7 +49,7 @@ Frontend tests verify **model, update, and behavior** — never CSS classes, Tai
 pub fn initial_order_form_has_empty_lines_test() {
   let model = order_form.init()
   model.lines |> should.equal([])
-  model.is_submitting |> should.equal(False)
+  model.save |> should.equal(submit.SubmitIdle)
 }
 
 // Update logic
@@ -82,7 +82,7 @@ pub fn click_submit_sets_submitting_test() {
     test_app()
     |> simulate.click(on: query.element(query.id("submit-btn")))
     |> simulate.model()
-  model.is_submitting |> should.equal(True)
+  model.save |> should.equal(submit.SubmitSaving)
 }
 
 // Keyboard navigation

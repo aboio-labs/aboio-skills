@@ -10,7 +10,7 @@ Inherits: `skills/CONTEXT.md`.
 lustre/
 ├── SKILL.md                         # Main prompt with decision trees
 └── references/                      # JavaScript target — Lustre
-    ├── advanced-mvu-forms.md    # FormState, FieldState, parameterization
+    ├── advanced-mvu-forms.md    # Save lifecycle (Submit), FieldState, parameterization
     ├── lustre-core.md           # MVU architecture, state, messages
     ├── lustre-effects.md        # Effects, paint cycle
     ├── lustre-routing.md        # SPA routing (modem)
@@ -46,5 +46,5 @@ lustre/
 | Common Lustre gotchas                    | `lustre-gotchas.md`                             |
 
 ## Common Lustre Gotchas
-- **Prefer sum types over `Bool` fields in model state.** Aligns with MVU conventions. Use `FormState(data)` for forms.
+- **Prefer sum types over `Bool` fields in model state.** Aligns with MVU conventions. For a form, the model owns its data and carries a sibling `save: Submit` (`SubmitIdle | SubmitSaving | SubmitSaved | SubmitFailed(err)`); for a page load, use `RemoteData`. Never a `saving: Bool`.
 - **Never pass `Model` to Effects.** Extract the needed primitives in the `update` loop.
