@@ -113,3 +113,34 @@ fn save_user_effect(token: String, req: SaveUserRequest) -> Effect(Msg) {
 ```
 
 The `update` function is the ONLY brain in the application. It must extract, validate, and compute all necessary DTOs, and then pass only the final primitives into the effect function.
+
+## State Accessor Helpers in the State Module (from #1183)
+
+When a page state union type carries shared fields (e.g., `search: String` in all variants), provide accessor helper functions in the `state/<domain>.gleam` module rather than inlining the same multi-arm case expression at every call site.
+
+```gleam
+// DON'T: Inline pattern-match at every call site
+let search = case model.products_page {
+  ProductsLoading(search: s, ..) -> s
+  ProductsLoaded(search: s, ..) -> s
+  ProductsFailed(search: s, ..) -> s
+  ProductsIdle -> ""
+}
+// ...repeated in view, update, and route handlers
+
+// DO: Centralize structural knowledge in the state module
+// state/products.gleam
+pub fn current_search(page: ProductsPage) -> String {
+  case page {
+    ProductsLoading(search: s, ..) -> s
+    ProductsLoaded(search: s, ..) -> s
+    ProductsFailed(search: s, ..) -> s
+    ProductsIdle -> ""
+  }
+}
+
+// Call sites become one-liners:
+let search = products_state.current_search(model.products_page)
+```
+
+Without these accessors, structural knowledge about the union type is duplicated across multiple files. A field rename or variant addition requires finding and updating every inlined case expression.

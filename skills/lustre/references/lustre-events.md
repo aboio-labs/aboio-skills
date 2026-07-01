@@ -115,3 +115,44 @@ list.index_map(results, fn(item, i) {
   ], [html.text(item.label)])
 })
 ```
+
+## Blur Validation Pattern
+
+Use `event.on("blur", ...)` to trigger validation when the user leaves a field. The Msg carries the field id; the update handler re-validates all fields (not just the blurred one) so errors accumulate correctly.
+
+```gleam
+// DON'T: validate on every keystroke — errors show mid-type
+event.on_input(fn(v) { UserTypedEmail(v) })
+// In update: validate + set errors on every UserTypedEmail → distracting
+
+// DO: validate on blur + submit only
+html.input([
+  attribute.value(model.email),
+  event.on_input(fn(v) { UserTypedEmail(v) }),
+  event.on(
+    "blur",
+    decode.success(UserBlurredField("email")),
+  ),
+])
+
+// Update handler re-validates all fields — accumulates, doesn't replace
+UserBlurredField(_field_id) -> {
+  let errors = validate_all_fields(model.form, model.language)
+  #(Model(..model, form: FormVisible(..model.form, field_errors: errors)), effect.none())
+}
+
+// Gate the submit on errors being absent
+UserClickedSave -> {
+  let errors = validate_all_fields(model.form, model.language)
+  use <- bool.guard(!dict.is_empty(errors), {
+    #(Model(..model, form: FormVisible(..model.form, field_errors: errors)), effect.none())
+  })
+  // proceed with save...
+}
+```
+
+Key rules:
+- The `_field_id` parameter should be accepted but can be ignored — re-validate all fields so the full error set is always coherent.
+- Always clear `field_errors` (`dict.new()`) when save succeeds, not when save starts.
+- If you have sub-table validation (e.g., variant rows), run both `validate_form_fields` and `validate_table_rows` and merge results with `dict.merge`.
+- `aria-invalid="true"` MUST be set on the `<input>` element when an error exists — not just the CSS class. The class styles the border; `aria-invalid` informs screen readers.

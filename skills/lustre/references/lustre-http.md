@@ -159,3 +159,20 @@ fn update(model, msg) {
 ```
 
 **Refactoring warning:** When changing message shapes (e.g., removing the `query` field from `ServerReturnedResults`), verify that staleness guards are re-implemented another way. Silently dropping the guard causes stale responses to overwrite correct results — a subtle bug that doesn't crash.
+
+## Decoding Optional Fields That May Be Absent or Null
+
+When the server may either omit a JSON field entirely OR serialize it as `null`, use `decode.optional_field`:
+
+```gleam
+// DON'T — fails when the key is absent (only handles explicit null)
+use isbn13 <- decode.field("isbn13", decode.optional(decode.string))
+
+// DO — handles both absent key and explicit null
+use isbn13 <- decode.optional_field("isbn13", None, decode.optional(decode.string))
+```
+
+Use `decode.optional_field(key, default, inner_decoder)` when:
+- The field may not exist in older cached responses
+- The server conditionally omits the key rather than sending `null`
+- The underlying value is itself optional (`Option(String)`)

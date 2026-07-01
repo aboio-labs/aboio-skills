@@ -402,3 +402,49 @@ alert([alert.danger()], [
 5. **Customizable** - CSS variables allow per-instance overrides
 6. **No inheritance** - Pure functions, no class hierarchies
 7. **Tree-shakeable** - Only import what you use
+
+---
+
+## Sprout Table Component — `table.body()` with `optimist.from()`
+
+**Added:** 2026-03-08 — from #1601/#1607/#1608 migrations
+
+The `sprout/table` component provides typed cell helpers (`text_cell`, `badge_cell`, `timestamp_cell`, `actions_cell`, etc.). The `table.body()` function takes `Optimistic(List(a))` — callers must `import optimist`.
+
+**DON'T — raw keyed.tbody with manual row classes:**
+```gleam
+keyed.tbody([], list.map(items, fn(item) {
+  #(item.id, html.tr([class("border-t border-[var(--border-default)]")], [
+    html.td([class("py-3 pr-4 text-sm")], [text(item.email)]),
+    html.td([class("py-3 text-right")], [action_button(item)]),
+  ]))
+}))
+```
+
+**DO — sprout/table with optimist.from() for static resolved lists:**
+```gleam
+import optimist
+import sprout/table
+
+table.root([], [
+  table.header([], [
+    table.row([], [
+      table.head([], [text("Email")]),
+      table.head([], [text("Actions")]),
+    ]),
+  ]),
+  table.body([], optimist.from(items), fn(item) {
+    table.row([], [
+      table.text_cell([], item.email),
+      table.actions_cell([], [revoke_button(item)]),
+    ])
+  }),
+])
+```
+
+**Key rules:**
+- `optimist.from(list)` wraps a resolved list — no optimistic features, no pending opacity.
+- `table.body()` keys rows by **integer index** (`list.index_map`), not entity ID. Safe for read-only display lists; use `keyed.tbody` directly if rows can reorder while live.
+- For optimistic-add items with no server ID yet (`id == ""`), the correct key is `item.id <> item.title` — stable for confirmed items, unique for pending-add items. Using `item.id` alone causes all pending-add items to share the same key, breaking Lustre's diffing.
+- `actions_cell` already wraps children in `flex items-center justify-end gap-1`. Do NOT add an extra flex div inside it — pass action elements directly as siblings.
+- `optimist` is vendored at `shared/lib/sprout/src/optimist.gleam` (top-level module, not `sprout/optimist`). Import as `import optimist`.

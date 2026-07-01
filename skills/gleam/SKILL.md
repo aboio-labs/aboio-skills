@@ -1,6 +1,6 @@
 ---
 name: gleam
-description: Core Gleam language skill. Covers syntax fundamentals, type design, Parse Don't Validate, JSON decoding, pattern matching, tooling, and library design. Use when writing pure Gleam functions, validators, or shared domain types.
+description: Core Gleam language skill. Use when writing pure Gleam functions, parsing or validating input (Parse, Don't Validate), decoding JSON, designing a library, or defining shared domain types — not backend (see gleam-backend) or frontend (see lustre).
 ---
 
 # Gleam Core Fundamentals
@@ -8,7 +8,7 @@ description: Core Gleam language skill. Covers syntax fundamentals, type design,
 Consolidated skill for pure Gleam development. **Read the relevant reference before writing code.**
 
 ## Token Efficiency
-**All agents and commands using this skill MUST follow `references/token-efficiency.md`.** Use `Read` and `Grep` tools with targeted reads instead of reading entire files. Start with `git diff` to scope work.
+Start from `git diff` to scope work, `Grep` for patterns, and read targeted line ranges rather than whole files. Full policy: the repo-root `references/token-efficiency.md`.
 
 ## Reference routing — by task
 
@@ -30,10 +30,14 @@ Consolidated skill for pure Gleam development. **Read the relevant reference bef
 | Code Patterns (use, result.try)          | `fundamentals/code-patterns.md`                 |
 | Tooling (check, format, LSP)             | `fundamentals/tooling.md`                       |
 | Snapshot testing (birdie)                | `fundamentals/birdie-snapshot-testing.md`       |
+| Stdlib functions                         | `fundamentals/stdlib.md`                        |
+| Module name gotchas (regexp vs regex)    | `fundamentals/stdlib-module-names.md`           |
+| Parser combinators (nibble)              | `fundamentals/parsing-nibble.md`                |
+| Helper-first refactoring                 | `fundamentals/helper-first-refactoring.md`      |
+| Higher-order SQL helpers                 | `fundamentals/higher-order-sql-helpers.md`      |
+| String / character filtering             | `fundamentals/string-character-filtering.md`    |
 
 ## Core Principles
 
-1. **Errors as Values** — use Result types, never exceptions
-2. **Explicit over Implicit** — no hidden state, no magic
-3. **Type Safety** — let the compiler catch bugs
-4. **Parse, Don't Validate** — opaque types for validated data
+- **Parse, Don't Validate** — opaque types for validated data (`fundamentals/type-design.md`).
+- **Errors as Values** — one `AppError` type, `Result` everywhere (`fundamentals/error-handling.md`).

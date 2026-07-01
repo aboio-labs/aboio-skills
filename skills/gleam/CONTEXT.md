@@ -1,5 +1,5 @@
 # gleam — Core Gleam Skill
-> Last updated: 2026-05-16
+> Last updated: 2026-07-01
 
 Covers language fundamentals, syntax, type design, and library construction.
 For backend logic (Wisp, OTP) use the `gleam-backend` skill.
@@ -37,28 +37,5 @@ gleam/
         └── ffi.md                   # Erlang + JavaScript FFI
 ```
 
-## Reference routing — by task
-
-| Task                          | References to read                                                               |
-|-------------------------------|----------------------------------------------------------------------------------|
-| New to Gleam syntax           | `fundamentals/language-basics.md` + `fundamentals/language-features.md`          |
-| Input validation & Types      | `fundamentals/type-design.md` + `fundamentals/validation-valid.md`               |
-| JSON Decoding / Encoding      | `fundamentals/decoding.md` + `fundamentals/decode-map-vs-then.md`                |
-| Error handling & AppError     | `fundamentals/error-handling.md`                                                 |
-| Designing a Library           | `library/library-design.md` + `library/ffi.md`                                   |
-
-## Reference routing — by topic
-
-| Topic                                    | Reference                                       |
-|------------------------------------------|-------------------------------------------------|
-| Official Conventions (C1-C10)            | `fundamentals/conventions.md`                   |
-| Common mistakes / pitfalls               | `fundamentals/common-pitfalls.md`               |
-| Pattern Matching                         | `fundamentals/case-patterns.md`                 |
-| Code Patterns (use, result.try)          | `fundamentals/code-patterns.md`                 |
-| Tooling (check, format, LSP)             | `fundamentals/tooling.md`                       |
-| Snapshot testing (birdie)                | `fundamentals/birdie-snapshot-testing.md`       |
-
-## Common Gleam gotchas
-
-### Decoding
-- **`decode.optional_field` crashes on `null`** — it only handles *missing* fields. If JSON sends `null`, use `Option(String)`
+## Reference routing
+Task- and topic-based routing tables live in `SKILL.md` (single source of truth); every file in the Layout above has a pointer there. Common decoding/pitfall gotchas live in `references/fundamentals/common-pitfalls.md`.

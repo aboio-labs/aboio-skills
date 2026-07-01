@@ -25,7 +25,7 @@ and rules. This two-tier design keeps token usage low.
 ### Language & framework
 | Skill               | Purpose                                           | References |
 |----------------------|---------------------------------------------------|------------|
-| `gleam`              | Comprehensive Gleam: syntax, backend, frontend, library design | 48 files across 4 categories |
+| `gleam`              | Core Gleam: syntax, types, decoding, library design | 21 files across 2 categories |
 | `api-gleam`          | REST/JSON API patterns for Gleam + Wisp + Mist    | 9 files    |
 | `pg-gleam`           | Postgres performance and best practices            | 42 files across 8 categories |
 
