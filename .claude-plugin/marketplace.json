@@ -17,9 +17,9 @@
       "strict": false,
       "skills": [
         "./skills/gleam",
+        "./skills/gleam-backend",
+        "./skills/lustre",
         "./skills/pg-gleam",
-        "./skills/code-simplifier",
-        "./skills/observability-master",
         "./skills/tdd",
         "./skills/frontend-testing",
         "./skills/api-gleam"
