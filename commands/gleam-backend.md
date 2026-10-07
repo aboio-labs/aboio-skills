@@ -29,29 +29,29 @@ Based on the feature type, read the appropriate reference files:
 
 **Always load (foundational):**
 
-- `~/.claude/skills/gleam/references/fundamentals/type-design.md`
-- `~/.claude/skills/gleam/references/fundamentals/decoding.md`
-- `~/.claude/skills/gleam/references/fundamentals/code-patterns.md`
-- `~/.claude/skills/gleam/references/fundamentals/error-handling.md`
+- `${CLAUDE_PLUGIN_ROOT}/skills/gleam/references/fundamentals/type-design.md`
+- `${CLAUDE_PLUGIN_ROOT}/skills/gleam/references/fundamentals/decoding.md`
+- `${CLAUDE_PLUGIN_ROOT}/skills/gleam/references/fundamentals/code-patterns.md`
+- `${CLAUDE_PLUGIN_ROOT}/skills/gleam/references/fundamentals/error-handling.md`
 
 **Load based on feature type:**
 
 | Feature               | Reference                                     |
 | --------------------- | --------------------------------------------- |
-| Web framework (wisp)  | `references/backend/wisp-framework.md`        |
-| HTTP server (mist)    | `references/backend/mist-server.md`           |
-| HTTP endpoint/handler | `references/backend/http-runner.md`           |
-| Database/SQL (Squirrel) | `references/backend/squirrel-guide.md`      |
-| Database/SQL (Parrot)   | `references/backend/parrot-guide.md`        |
-| JWT auth              | `references/backend/jwt-ywt.md`               |
-| Password/time auth    | `references/backend/auth.md`                  |
-| OTP actor/process     | `references/backend/otp.md`                   |
-| Logging               | `references/backend/logging.md`               |
-| Algebraic effects     | `references/backend/midas-effect-task.md`     |
-| S3 / object storage   | `references/backend/bucket-s3.md`             |
-| Input validation      | `references/fundamentals/validation-valid.md` |
+| Web framework (wisp)  | `skills/gleam-backend/references/wisp-framework.md`        |
+| HTTP server (mist)    | `skills/gleam-backend/references/mist-server.md`           |
+| HTTP endpoint/handler | `skills/gleam-backend/references/http-runner.md`           |
+| Database/SQL (Squirrel) | `skills/gleam-backend/references/squirrel-guide.md`      |
+| Database/SQL (Parrot)   | `skills/gleam-backend/references/parrot-guide.md`        |
+| JWT auth              | `skills/gleam-backend/references/jwt-ywt.md`               |
+| Password/time auth    | `skills/gleam-backend/references/auth.md`                  |
+| OTP actor/process     | `skills/gleam-backend/references/otp.md`                   |
+| Logging               | `skills/gleam-backend/references/http-logging-middleware.md` |
+| Algebraic effects     | `skills/gleam-backend/references/midas-effect-task.md`     |
+| S3 / object storage   | `skills/gleam-backend/references/bucket-s3.md`             |
+| Input validation      | `skills/gleam/references/fundamentals/validation-valid.md` |
 
-All backend references live under `~/.claude/skills/gleam/references/backend/`.
+Table paths are relative to the plugin root, `${CLAUDE_PLUGIN_ROOT}`.
 
 ### Step 3: Explore existing project structure
 

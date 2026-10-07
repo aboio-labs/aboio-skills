@@ -51,20 +51,20 @@ Focus on files containing: `actor.`, `supervisor.`, `factory.`, `process.`, `Sub
 
 **Always load (foundational):**
 
-- `~/.claude/skills/gleam/references/backend/otp.md`
-- `~/.claude/skills/gleam/references/backend/otp-supervision.md`
-- `~/.claude/skills/gleam/references/fundamentals/error-handling.md`
-- `~/.claude/skills/gleam/references/fundamentals/code-patterns.md`
+- `${CLAUDE_PLUGIN_ROOT}/skills/gleam-backend/references/otp.md`
+- `${CLAUDE_PLUGIN_ROOT}/skills/gleam-backend/references/otp-supervision.md`
+- `${CLAUDE_PLUGIN_ROOT}/skills/gleam/references/fundamentals/error-handling.md`
+- `${CLAUDE_PLUGIN_ROOT}/skills/gleam/references/fundamentals/code-patterns.md`
 
 **Load based on complexity:**
 
 | Pattern | Reference |
 |---------|-----------|
-| Advanced selectors, timers, ETS | `references/backend/otp-advanced.md` |
-| Logging actor failures | `references/backend/logging.md` |
-| Three-tier error handling | `references/backend/three-tier-error-handling.md` |
+| Advanced selectors, timers, ETS | `skills/gleam-backend/references/otp-advanced.md` |
+| Logging actor failures | the `/observability-master` command |
+| Three-tier error handling | `skills/gleam-backend/references/three-tier-error-handling.md` |
 
-All backend references live under `~/.claude/skills/gleam/references/backend/`.
+Table paths are relative to the plugin root, `${CLAUDE_PLUGIN_ROOT}`.
 
 ### Step 3: Run the OTP Audit Checklist
 
@@ -331,12 +331,12 @@ Provide clear audit results:
 - `cache.gleam` Dict grows without cleanup
 - After 1M entries, VM will OOM
 - **Recommend:** Add TTL-based cleanup with `process.send_after`
-- **Reference:** `~/.claude/skills/gleam/references/backend/otp-advanced.md` (section: State Cleanup)
+- **Reference:** `skills/gleam-backend/references/otp-advanced.md` (section: State Cleanup)
 
 **[HIGH] Missing Supervision**
 - Store and RateLimiter start unsupervised in kafka.gleam
 - **Recommend:** Add static supervisor
-- **Reference:** `~/.claude/skills/gleam/references/backend/otp-supervision.md`
+- **Reference:** `skills/gleam-backend/references/otp-supervision.md`
 
 **[MEDIUM] Suboptimal Message Pattern**
 - `GetSettings` uses fire-and-forget (no reply channel)

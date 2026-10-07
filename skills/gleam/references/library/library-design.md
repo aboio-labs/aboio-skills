@@ -386,7 +386,7 @@ pub fn decrement_below_zero_test() {
 }
 ```
 
-See `frontend/lustre-testing.md` for full query/simulate API reference.
+See the lustre skill's `lustre-testing.md` for full query/simulate API reference.
 
 ## API Wrapper Specifics
 

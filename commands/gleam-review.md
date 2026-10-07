@@ -21,11 +21,11 @@ Check `$ARGUMENTS` for `--thorough` flag:
 
 Read these foundational reference files:
 
-- `~/.claude/skills/gleam/references/fundamentals/common-pitfalls.md`
-- `~/.claude/skills/gleam/references/fundamentals/error-handling.md`
-- `~/.claude/skills/gleam/references/fundamentals/type-design.md`
-- `~/.claude/skills/gleam/references/fundamentals/code-patterns.md`
-- `~/.claude/skills/gleam/references/fundamentals/conventions.md`
+- `${CLAUDE_PLUGIN_ROOT}/skills/gleam/references/fundamentals/common-pitfalls.md`
+- `${CLAUDE_PLUGIN_ROOT}/skills/gleam/references/fundamentals/error-handling.md`
+- `${CLAUDE_PLUGIN_ROOT}/skills/gleam/references/fundamentals/type-design.md`
+- `${CLAUDE_PLUGIN_ROOT}/skills/gleam/references/fundamentals/code-patterns.md`
+- `${CLAUDE_PLUGIN_ROOT}/skills/gleam/references/fundamentals/conventions.md`
 
 ### Step 2: Detect target domain
 
@@ -40,14 +40,14 @@ Examine the target files' imports and the project's `gleam.toml` to determine wh
 Based on the detected domain, load the base references:
 
 **If backend:**
-- `~/.claude/skills/gleam/references/backend/otp.md`
-- `~/.claude/skills/gleam/references/backend/http-runner.md`
-- `~/.claude/skills/gleam/references/fundamentals/decoding.md`
+- `${CLAUDE_PLUGIN_ROOT}/skills/gleam-backend/references/otp.md`
+- `${CLAUDE_PLUGIN_ROOT}/skills/gleam-backend/references/http-runner.md`
+- `${CLAUDE_PLUGIN_ROOT}/skills/gleam/references/fundamentals/decoding.md`
 
 **If frontend:**
-- `~/.claude/skills/gleam/references/frontend/lustre-gotchas.md`
-- `~/.claude/skills/gleam/references/frontend/lustre-core.md`
-- `~/.claude/skills/gleam/references/frontend/lustre-effects.md`
+- `${CLAUDE_PLUGIN_ROOT}/skills/lustre/references/lustre-gotchas.md`
+- `${CLAUDE_PLUGIN_ROOT}/skills/lustre/references/lustre-core.md`
+- `${CLAUDE_PLUGIN_ROOT}/skills/lustre/references/lustre-effects.md`
 
 **If both or unclear**, load references from both domains.
 
@@ -55,13 +55,13 @@ Then check imports for specific libraries and load their references too:
 
 | Import detected | Load reference |
 |-----------------|----------------|
-| `wisp` | `references/backend/wisp-framework.md` |
-| `mist` | `references/backend/mist-server.md` |
-| `valid` | `references/fundamentals/validation-valid.md` |
-| `bucket` | `references/backend/bucket-s3.md` |
-| `nibble` | `references/fundamentals/parsing-nibble.md` |
-| `ywt` | `references/backend/jwt-ywt.md` |
-| `logging` | `references/backend/logging.md` |
+| `wisp` | `skills/gleam-backend/references/wisp-framework.md` |
+| `mist` | `skills/gleam-backend/references/mist-server.md` |
+| `valid` | `skills/gleam/references/fundamentals/validation-valid.md` |
+| `bucket` | `skills/gleam-backend/references/bucket-s3.md` |
+| `nibble` | `skills/gleam/references/fundamentals/parsing-nibble.md` |
+| `ywt` | `skills/gleam-backend/references/jwt-ywt.md` |
+| `logging` | `skills/gleam-backend/references/http-logging-middleware.md` |
 
 Only load what the code actually uses — don't load all of them.
 

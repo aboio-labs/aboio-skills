@@ -27,26 +27,26 @@ Parse what kind of frontend feature this involves. It may include one or more of
 Based on the feature type, read the appropriate reference files:
 
 **Always load (gotchas and core):**
-- `~/.claude/skills/gleam/references/frontend/lustre-gotchas.md`
-- `~/.claude/skills/gleam/references/frontend/lustre-core.md`
-- `~/.claude/skills/gleam/references/fundamentals/type-design.md`
-- `~/.claude/skills/gleam/references/fundamentals/code-patterns.md`
+- `${CLAUDE_PLUGIN_ROOT}/skills/lustre/references/lustre-gotchas.md`
+- `${CLAUDE_PLUGIN_ROOT}/skills/lustre/references/lustre-core.md`
+- `${CLAUDE_PLUGIN_ROOT}/skills/gleam/references/fundamentals/type-design.md`
+- `${CLAUDE_PLUGIN_ROOT}/skills/gleam/references/fundamentals/code-patterns.md`
 
 **Load based on feature type:**
 
 | Feature | Reference |
 |---------|-----------|
-| New page/route | `references/frontend/lustre-routing.md` |
-| API/HTTP calls | `references/frontend/lustre-http.md` |
-| Web components | `references/frontend/lustre-components.md` |
-| Events/interactivity | `references/frontend/lustre-events.md` |
-| UI composition | `references/frontend/lustre-ui-patterns.md` |
-| Browser APIs | `references/frontend/lustre-browser-apis.md` |
-| Effects/commands | `references/frontend/lustre-effects.md` |
-| SSR/hydration | `references/frontend/lustre-advanced.md` |
-| Parsing / DSLs | `references/fundamentals/parsing-nibble.md` |
+| New page/route | `skills/lustre/references/lustre-routing.md` |
+| API/HTTP calls | `skills/lustre/references/lustre-http.md` |
+| Web components | `skills/lustre/references/lustre-components.md` |
+| Events/interactivity | `skills/lustre/references/lustre-events.md` |
+| UI composition | `skills/lustre/references/lustre-ui-patterns.md` |
+| Browser APIs | `skills/lustre/references/lustre-browser-apis.md` |
+| Effects/commands | `skills/lustre/references/lustre-effects.md` |
+| SSR/hydration | `skills/lustre/references/lustre-advanced.md` |
+| Parsing / DSLs | `skills/gleam/references/fundamentals/parsing-nibble.md` |
 
-All frontend references live under `~/.claude/skills/gleam/references/frontend/`.
+Table paths are relative to the plugin root, `${CLAUDE_PLUGIN_ROOT}`.
 
 ### Step 3: Explore existing project structure
 

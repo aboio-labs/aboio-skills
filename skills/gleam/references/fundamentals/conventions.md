@@ -388,7 +388,7 @@ pub fn create_user_response(
 }
 ```
 
-**In practice:** See `backend/http-runner.md` for how our project implements this pattern.
+**In practice:** See the gleam-backend skill's `http-runner.md` for how our project implements this pattern.
 
 ### P6. Builder Pattern
 
