@@ -56,7 +56,7 @@ Communication happens over stdio using the Language Server Protocol (LSP).
 
 ## Configuration
 
-The LSP server is configured with:
+The `gleam-lsp` entry in `.claude-plugin/marketplace.json` registers the server under `lspServers`. Claude Code reads it from there, not from this README:
 
 ```json
 {

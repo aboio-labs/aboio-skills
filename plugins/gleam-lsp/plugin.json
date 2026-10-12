@@ -1,6 +1,6 @@
 {
   "name": "gleam-lsp",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Code Intelligence support for the Gleam language using the official gleam lsp server.",
   "author": {
     "name": "Aboio",
